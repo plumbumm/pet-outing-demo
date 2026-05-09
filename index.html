@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>宠物出门系统 Demo</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--ink:#111;--text:#262626;--muted:#8b8b8b;--line:#ededed;--blue:#129cf3;--green:#18ce70;--red:#ff3b30;--gold:#f6b83b;--softShadow:0 8px 24px rgba(30,30,30,.08)}
+html,body{height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",Arial,sans-serif;background:#fff;color:var(--text);max-width:420px;margin:0 auto;min-height:100vh;position:relative;overflow-x:hidden}
+button{font:inherit;border:none;background:none;cursor:pointer;color:inherit}
+.screen{display:none;min-height:100vh;position:relative;overflow:hidden;animation:fade .22s ease-out}
+.screen.active{display:block}
+@keyframes fade{from{opacity:.55;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes floatIn{from{opacity:0;transform:translateX(-50%) translateY(100%)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* iOS 顶栏 */
+.statusbar{position:absolute;top:0;left:0;right:0;height:54px;z-index:40;display:flex;align-items:end;justify-content:space-between;padding:0 34px 9px 34px;color:#000;font-weight:800;font-size:17px;pointer-events:none}
+.status-icons{display:flex;align-items:center;gap:8px}
+.signal{display:flex;gap:3px;align-items:flex-end;height:14px}.signal i{display:block;width:3px;border-radius:2px;background:#000}.signal i:nth-child(1){height:5px}.signal i:nth-child(2){height:8px}.signal i:nth-child(3){height:11px}.signal i:nth-child(4){height:14px}
+.wifi{width:18px;height:14px;position:relative}.wifi:before,.wifi:after{content:"";position:absolute;border:3px solid #000;border-bottom:0;border-left-color:transparent;border-right-color:transparent;border-radius:18px 18px 0 0}.wifi:before{width:18px;height:10px;left:0;top:0}.wifi:after{width:9px;height:5px;left:4.5px;top:6px}
+.battery{width:26px;height:13px;border:2px solid #000;border-radius:4px;position:relative}.battery:after{content:"";position:absolute;right:-5px;top:3px;width:3px;height:5px;background:#000;border-radius:0 2px 2px 0}.battery i{display:block;height:100%;width:72%;background:#000;border-radius:2px}
+.top-title{position:absolute;top:68px;left:0;right:0;text-align:center;font-size:18px;font-weight:800;letter-spacing:.5px;z-index:35}
+.circle-btn{width:44px;height:44px;border-radius:50%;background:rgba(255,255,242,.68);backdrop-filter:blur(16px);display:flex;align-items:center;justify-content:center;font-size:24px;z-index:41}
+.back-btn{position:absolute;top:58px;left:20px}
+.right-btn{position:absolute;top:58px;right:20px;font-size:22px;border-radius:12px;background:rgba(255,255,255,.5)}
+
+/* 企鹅 */
+.penguin-img{object-fit:contain;filter:drop-shadow(0 18px 16px rgba(0,0,0,.18))}
+.avatar-penguin{background:#12cbed;border-radius:50%;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.avatar-penguin img{width:120%;height:120%;object-fit:contain;transform:translateY(7%)}
+
+/* 首页 */
+.home-bg{min-height:100vh;background:url('home-bg.png') center/cover no-repeat;position:relative;overflow:hidden}
+.home-toolbar{position:absolute;top:56px;left:20px;right:20px;display:flex;justify-content:space-between;align-items:flex-start;z-index:30}
+.left-group{display:flex;gap:10px;align-items:center}
+.pet-chip{height:44px;background:rgba(255,255,242,.75);backdrop-filter:blur(16px);border-radius:22px;padding:3px 10px 3px 3px;display:flex;align-items:center;gap:8px;box-shadow:var(--softShadow)}
+.pet-chip .avatar-penguin{width:38px;height:38px;flex:0 0 38px}
+.pet-chip .info{display:flex;align-items:center;gap:6px}
+.pet-chip .name{font-size:14px;font-weight:800;color:#111;white-space:nowrap}
+.pet-chip .divider{width:1px;height:14px;background:rgba(0,0,0,.12)}
+.pet-chip .owner{font-size:12px;color:#666;white-space:nowrap}
+.ring{width:28px;height:28px;border-radius:50%;background:conic-gradient(#0fa3ff,#1fd66e,#ffd337,#ff7c27,#0fa3ff);position:relative;margin-left:4px}
+.ring:after{content:"";position:absolute;inset:5px;background:#ffe08d;border-radius:50%}
+.right-group{display:flex;gap:10px}
+.mini{width:44px;height:44px;border-radius:50%;background:rgba(255,255,242,.7);backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:var(--softShadow);flex-direction:column}
+.side-stack{position:absolute;top:115px;right:20px;z-index:31;display:flex;flex-direction:column;align-items:center;gap:12px}
+.paw-count{font-size:13px;font-weight:900;color:#222;line-height:1}
+.home-pet{position:absolute;left:0;right:0;top:42%;display:flex;justify-content:center;align-items:center;height:220px;animation:bob 3.2s ease-in-out infinite;z-index:10}
+.home-pet .penguin-img{width:220px;height:220px}
+.action-dock{position:absolute;left:30px;right:30px;bottom:35px;display:flex;justify-content:space-between;z-index:34}
+.dock-item{position:relative;width:66px;height:66px;border-radius:50%;background:rgba(240,235,225,.7);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#444;box-shadow:var(--softShadow)}
+.dock-item .ico{font-size:26px;margin-bottom:2px;line-height:1}
+.dock-item .lbl{font-size:13px;font-weight:700}
+.dock-item .dock-timer{position:absolute;bottom:-22px;left:50%;transform:translateX(-50%);background:#fff;border-radius:12px;padding:3px 10px;font-size:12px;font-weight:800;color:#129cf3;box-shadow:0 2px 7px rgba(0,0,0,.1);white-space:nowrap;animation:blink 2s ease-in-out infinite}
+.dock-item .dock-timer.hidden{display:none}
+
+/* 底部浮层 */
+.sheet-overlay{display:none;position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.35)}
+.sheet-overlay.show{display:block}
+.bottom-sheet{position:fixed;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:388px;bottom:24px;background:rgba(252,252,248,.96);backdrop-filter:blur(18px);border-radius:24px;padding:24px 20px;z-index:81;box-shadow:0 16px 48px rgba(0,0,0,.15);animation:floatIn .28s ease-out;max-height:70vh;overflow-y:auto}
+.sheet-title{font-size:20px;font-weight:800;padding-bottom:14px;border-bottom:1px solid rgba(0,0,0,.06);display:flex;gap:8px;align-items:center}
+.sheet-line{display:grid;grid-template-columns:54px 1fr;gap:12px;align-items:center;margin-top:14px;font-size:15px}
+.sheet-line .k{color:#777}
+.sheet-line .v{font-weight:700;color:#222}
+.companion{display:flex;align-items:center;gap:12px}
+.companion .avatar-penguin{width:44px;height:44px}
+.plus{width:44px;height:44px;border-radius:50%;border:1.5px dashed #ccc;display:flex;align-items:center;justify-content:center;color:#999;font-size:28px}
+.bonus{margin-left:auto;color:#888;white-space:nowrap;font-size:13px}
+.sheet-btn{margin-top:22px}
+.btn-blue{background:#129cf3;color:white;font-weight:800;font-size:17px;padding:15px 24px;border-radius:28px;width:100%;box-shadow:0 8px 16px rgba(18,156,243,.25)}
+/* 等级颜色标签 */
+.tier-badge{display:inline-block;padding:3px 10px;border-radius:10px;font-size:12px;font-weight:800;margin-right:6px}
+.tier-badge.t0{background:#e8f5e9;color:#2e7d32} /* 初级-绿 */
+.tier-badge.t1{background:#e3f2fd;color:#1565c0} /* 中级-蓝 */
+.tier-badge.t2{background:#fff3e0;color:#e65100} /* 高级-橙 */
+.tier-badge.t3{background:#fce4ec;color:#c62828} /* 终极-红 */
+.list{display:flex;flex-direction:column;gap:10px}
+.list-card{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.84);border-radius:20px;padding:12px 14px;box-shadow:var(--softShadow);border:1px solid rgba(255,255,255,.85)}
+.list-card .icon{width:46px;height:46px;border-radius:15px;background:#fff3cf;display:flex;align-items:center;justify-content:center;font-size:24px;flex:0 0 46px}
+.list-card .main{flex:1}
+.list-card .name{font-weight:800;font-size:16px}
+.list-card .meta{font-size:12px;color:var(--muted);margin-top:3px}
+.list-card .price{font-size:14px;color:#e79a10;font-weight:900}
+
+/* 结算弹窗 */
+.result-modal{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
+.result-modal.show{display:flex}
+.result-card{width:100%;max-width:360px;border-radius:28px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.3);animation:slideUp .4s ease-out}
+.result-card .card-img{width:100%;height:180px;object-fit:cover}
+.result-card .card-body{padding:22px;background:#fff}
+.result-card .card-type{display:inline-block;border-radius:12px;padding:4px 12px;font-size:12px;font-weight:800;margin-bottom:10px}
+.result-card .card-type.study{background:#e8f5e9;color:#2e7d32}
+.result-card .card-type.work{background:#fff3e0;color:#e65100}
+.result-card .card-type.adventure{background:#e3f2fd;color:#1565c0}
+.result-card .card-title{font-size:21px;font-weight:900;margin-bottom:5px}
+.result-card .card-sub{font-size:13px;color:#888;margin-bottom:14px}
+.result-card .card-rewards{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.result-card .card-rewards .sr{display:inline-flex;align-items:center;gap:4px;border-radius:12px;background:#f5f5f7;padding:5px 10px;font-weight:800;font-size:12px;color:#555}
+.result-card .card-unlock{background:#fff8dc;border-radius:14px;padding:10px 12px;margin-bottom:14px;color:#8a6b22;font-size:13px;font-weight:700}
+.result-card .card-comment{background:#f8f8f8;border-radius:14px;padding:12px;line-height:1.6;color:#555;font-size:13px;margin-bottom:18px}
+.result-card .card-actions{display:flex;gap:12px}
+.result-card .card-actions button{flex:1;height:46px;border-radius:16px;font-weight:800;font-size:15px}
+.result-card .card-actions .accept{background:#129cf3;color:#fff}
+.result-card .card-actions .celebrate{background:#fff6d8;color:#d99810;border:1px solid #f3df9c}
+
+/* 地图 */
+.map-bg{min-height:100vh;background:url('map-bg.png') center/cover no-repeat;position:relative}
+.map-stage{position:relative;height:100vh;overflow:hidden}
+.place{position:absolute;z-index:5;cursor:pointer}
+.place .label{position:absolute;z-index:6;background:rgba(255,255,250,.95);backdrop-filter:blur(8px);border-radius:28px;padding:8px 18px 10px;box-shadow:0 8px 24px rgba(0,0,0,.15);white-space:nowrap;text-align:center;transition:all .2s}
+.place .label .t{font-size:22px;font-weight:600;color:#222;line-height:1.2}
+.place .label .d{font-size:13px;color:#888;margin-top:3px}
+.place.locked .label{background:rgba(200,200,200,.85);box-shadow:0 6px 16px rgba(0,0,0,.08)}
+.place.locked .label .t{color:#999}
+.place.locked .label .d{color:#aaa}
+.place .label .lock-text{display:none;font-size:11px;color:#999;margin-top:4px;font-weight:700}
+.place.locked .label .lock-text{display:block}
+.place.school{left:20px;top:120px;width:200px;height:200px}
+.school .label{left:10px;top:5px}
+.place.shop{right:20px;top:330px;width:200px;height:200px}
+.shop .label{right:0;top:5px}
+.place.adventure{left:20px;top:560px;width:200px;height:200px}
+.adventure .label{left:10px;top:5px}
+.place.locked{opacity:.9}
+
+/* PK结果页 */
+.result-page{min-height:100vh;background:#fff;overflow-y:auto;padding-bottom:40px}
+.result-hero{height:260px;background:url('result-sample.png') center/cover no-repeat;position:relative;overflow:hidden}
+.profile-float{position:absolute;right:20px;bottom:20px;height:50px;background:rgba(255,255,255,.9);border-radius:25px;box-shadow:0 8px 20px rgba(0,0,0,.08);display:flex;align-items:center;padding:3px 14px 3px 3px;gap:10px}
+.profile-float .avatar-penguin{width:44px;height:44px}
+.profile-float .n{font-size:14px;font-weight:800}
+.profile-float .o{font-size:11px;color:#777}
+.profile-float .arr{font-size:22px;color:#666;margin-left:5px}
+.result-content{padding:20px}
+.pk-head{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0f0f0;padding-bottom:16px;margin-bottom:16px}
+.pk-title{font-size:24px;font-weight:900;display:flex;gap:8px}
+.pk-status{border:1px solid #f0e0c0;border-radius:20px;padding:4px 14px;color:#d99810;font-size:14px;font-weight:800;background:#fffaf0}
+.reward-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.pill{background:#f6f6f6;border-radius:18px;padding:8px 14px;font-size:13px;font-weight:800;color:#444;display:flex;align-items:center;gap:6px;position:relative}
+.pill .multi{position:absolute;top:-10px;left:8px;background:#e1f5ec;color:#0bb76a;padding:2px 6px;border-radius:8px;font-size:10px;font-weight:900;border:1px solid #c2ebd9}
+.pill .up{color:#0bb76a}.pill .down{color:#ff3b30}
+.timeline{display:flex;flex-direction:column;gap:18px}
+.tl{display:flex;gap:12px}
+.tl .time{color:#888;font-size:13px;width:42px;flex-shrink:0;padding-top:2px}
+.tl .txt{color:#333;font-size:14px;line-height:1.6;border-left:2px dashed #e6e6e6;padding-left:12px;flex:1}
+.pager{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:24px}
+.pg{width:36px;height:36px;border-radius:50%;border:1px solid #e0e0e0;display:flex;align-items:center;justify-content:center;font-size:18px}
+.pgnum{font-size:14px;font-weight:600;color:#555}
+
+/* 玩法介绍页 */
+.page{min-height:100vh;background:linear-gradient(#fffaf0,#f6f1e1);padding-top:112px}
+.page .top-title{top:72px}
+.content{padding:0 20px 28px}
+.guide-section{margin-bottom:22px}
+.guide-section .guide-title{font-size:17px;font-weight:800;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.guide-section .guide-text{font-size:13px;line-height:1.7;color:#555}
+.guide-section .guide-text strong{color:#222}
+.guide-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:12px}
+.guide-table th{background:#f5f0e0;padding:6px;text-align:left;font-weight:700}
+.guide-table td{padding:6px;border-bottom:1px solid #f0f0f0}
+
+.toast{position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:999;background:rgba(0,0,0,.8);color:#fff;border-radius:20px;padding:12px 24px;font-size:15px;display:none}
+.toast.show{display:block;animation:fade .18s}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<!-- 结算弹窗 -->
+<div class="result-modal" id="result-modal">
+  <div class="result-card" id="result-card"></div>
+</div>
+
+<!-- 首页 -->
+<div class="screen active" id="screen-home">
+  <div class="home-bg">
+    <div class="statusbar"><div>9:00</div><div class="status-icons"><div class="signal"><i></i><i></i><i></i><i></i></div><div class="wifi"></div><div class="battery"><i></i></div></div></div>
+    <div class="home-toolbar">
+      <div class="left-group">
+        <button class="circle-btn" onclick="showToast('返回')">‹</button>
+        <div class="pet-chip">
+          <div class="avatar-penguin"><img src="penguin.png" alt="小灰"></div>
+          <div class="info"><span class="name">小灰</span><span class="divider"></span><span class="owner">ee</span></div>
+          <div class="ring"></div>
+        </div>
+      </div>
+      <div class="right-group"><button class="mini">🔔</button><button class="mini">👕</button><button class="mini">⚙️</button></div>
+    </div>
+    <div class="side-stack">
+      <button class="mini">👥</button>
+      <button class="mini" style="flex-direction:column;gap:2px;height:auto;padding:8px 0;border-radius:22px;line-height:1.1"><span style="font-size:16px">🐾</span><span class="paw-count">999</span></button>
+    </div>
+    <div class="home-pet" onclick="petTap()"><img class="penguin-img" src="penguin.png" alt="小灰"></div>
+    <div class="action-dock">
+      <button class="dock-item" onclick="showToast('喂食')"><span class="ico">🍲</span><span class="lbl">喂食</span></button>
+      <button class="dock-item" onclick="showToast('对讲')"><span class="ico">📱</span><span class="lbl">对讲</span></button>
+      <button class="dock-item" onclick="showToast('洗澡')"><span class="ico">🚿</span><span class="lbl">洗澡</span></button>
+      <button class="dock-item" id="dock-outing" onclick="handleOutingClick()" style="border-color:#129cf3"><span class="ico" style="font-size:28px">📍</span><span class="lbl">出门</span><div class="dock-timer hidden" id="dock-countdown"></div></button>
+    </div>
+  </div>
+</div>
+
+<!-- 出门地图 -->
+<div class="screen" id="screen-map">
+  <div class="map-bg">
+    <div class="statusbar"><div>9:00</div><div class="status-icons"><div class="signal"><i></i><i></i><i></i><i></i></div><div class="wifi"></div><div class="battery"><i></i></div></div></div>
+    <button class="circle-btn back-btn" onclick="goHome()">‹</button>
+    <div class="top-title">出门</div>
+    <button class="circle-btn right-btn" onclick="showScreen('screen-guide')" style="font-size:18px">📖</button>
+    <div class="map-stage">
+      <div class="place school" id="building-study" onclick="goStudy()"><div class="label"><div class="t">学习 ›</div><div class="d">可获得学习经验值</div></div></div>
+      <div class="place shop" id="building-work" onclick="goWork()"><div class="label"><div class="t">打工 ›</div><div class="d">可获得金币</div><div class="lock-text">🔒 学习2次解锁</div></div></div>
+      <div class="place adventure" id="building-adventure" onclick="goAdventure()"><div class="label"><div class="t">冒险 ›</div><div class="d">可能遇到特别的事</div><div class="lock-text">🔒 赚100金解锁</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 玩法介绍页 -->
+<div class="screen" id="screen-guide">
+  <div class="page">
+    <div class="statusbar"><div>9:00</div><div class="status-icons"><div class="signal"><i></i><i></i><i></i><i></i></div><div class="wifi"></div><div class="battery"><i></i></div></div></div>
+    <button class="circle-btn back-btn" onclick="goMap()">‹</button>
+    <div class="top-title">玩法介绍</div>
+    <div class="content">
+      <div class="guide-section">
+        <div class="guide-title">📚 学习系统</div>
+        <div class="guide-text">
+          <strong>升级规则：</strong>每个科目有「基础→进阶→高级→专家」四个阶段。完成当前阶段后自动升级，前阶段不可再学。累计学分可升学历。<br><br>
+          <strong>路线选择：</strong>完成基础课程后选择专业方向。<strong>完成当前路线全部课程后，可以去学习其他路线。</strong>不同方向决定职业：
+        </div>
+        <table class="guide-table">
+          <tr><th>科目</th><th>路线</th><th>解锁职业</th></tr>
+          <tr><td>文化</td><td>写作/语言/传媒</td><td>诗人→小说家→文豪 等</td></tr>
+          <tr><td>科学</td><td>技术/研究/工程</td><td>程序员→架构师→技术之神 等</td></tr>
+          <tr><td>艺术</td><td>美术/音乐/舞蹈</td><td>画师→艺术总监→画圣 等</td></tr>
+          <tr><td>体育</td><td>竞技/训练/解说</td><td>运动员→冠军→体育传奇 等</td></tr>
+        </table>
+      </div>
+      <div class="guide-section">
+        <div class="guide-title">💼 打工系统</div>
+        <div class="guide-text">
+          <strong>职业解锁：</strong>升课程阶段解锁更高级职业，所有已解锁职业均可选择，越赚钱的排越前面。<br><br>
+          <strong>雇佣规则：</strong>可邀请好友宠物做同伴，获得50%金币加成。每次消耗10体力，收入=基础工资×(1+学历加成)×(1+同伴加成)。
+        </div>
+      </div>
+      <div class="guide-section">
+        <div class="guide-title">🏔️ 冒险系统</div>
+        <div class="guide-text">
+          <strong>收集概率：</strong><br>
+          · 新朋友（30%）· 特产道具（25%）· 金币宝箱（20%）<br>· PK挑战（15%）· 特殊事件（10%）
+        </div>
+      </div>
+      <div class="guide-section">
+        <div class="guide-title">🥊 PK 系统</div>
+        <div class="guide-text">
+          <strong>胜负 = </strong>学历（40%）+ 科目能力（30%）+ 活跃度（20%）+ 随机（10%）<br><br>
+          <strong>战斗方式：</strong>宠物运用所学科目战斗——文化「写诗攻击」、科学「化学烟雾弹」、艺术「音乐催眠」、体育「正面肉搏」。不是只有体育才能打！<br><br>
+          · 冒险中随机触发，胜利获1.5倍金币<br>
+          · 学历越高、科目越强 → 胜率越大<br>
+          · 胜利提升属性值（智力/运动/心情/魅力）
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 冒险PK结果 -->
+<div class="screen" id="screen-adventure-result">
+  <div class="result-page">
+    <div class="statusbar"><div>9:00</div><div class="status-icons"><div class="signal"><i></i><i></i><i></i><i></i></div><div class="wifi"></div><div class="battery"><i></i></div></div></div>
+    <button class="circle-btn back-btn" onclick="goHome()">‹</button>
+    <div class="result-hero">
+      <div class="profile-float"><div class="avatar-penguin"><img src="penguin.png"></div><div><div class="n">豆豆</div><div class="o">主人: ee(好友)</div></div><div class="arr">›</div></div>
+    </div>
+    <div class="result-content">
+      <div class="pk-head"><div class="pk-title">🥊 PK</div><div class="pk-status">😆 大获全胜</div></div>
+      <div class="reward-pills">
+        <div class="pill"><span class="multi">1.5倍</span>🪙 50</div>
+        <div class="pill">智力值 <span class="up">⬆</span></div>
+        <div class="pill">运动值 <span class="up">⬆</span></div>
+        <div class="pill">心情值 <span class="up">⬆</span></div>
+        <div class="pill">魅力值 <span class="down">⬇</span></div>
+      </div>
+      <div class="timeline">
+        <div class="tl"><div class="time">23:00</div><div class="txt">小灰运用文化课所学，即兴吟诗攻击："你虽力大如牛，我却笔下生花！"对手攻击力下降！</div></div>
+        <div class="tl"><div class="time">23:01</div><div class="txt">豆豆使出"旋风扫堂腿"，小灰灵巧闪避，用写作课练就的口才进行心理战。</div></div>
+        <div class="tl"><div class="time">23:02</div><div class="txt">小灰用科学知识制造小烟雾弹，趁乱发动最后一击！</div></div>
+      </div>
+      <div class="pager"><button class="pg">‹</button><div class="pgnum">5/10</div><button class="pg">›</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- 统一浮层 -->
+<div class="sheet-overlay" id="action-sheet" onclick="closeActionSheet()">
+  <div class="bottom-sheet" id="action-sheet-content" onclick="event.stopPropagation()"></div>
+</div>
+
+<script>
+// === 状态 (重置为初始体验) ===
+const state={
+  coins:80, stamina:50, studyCount:0, totalEarnings:0,
+  credits:0, education:0, // 幼儿园
+  currentSubject:null, currentJob:null, hiredFriend:null,
+  outingTimer:null, outingCallback:null, outingEnd:0,
+  unlocked:{work:false, adventure:false},
+  subjects:{
+    culture:{level:0, progress:0, route:null},
+    science:{level:0, progress:0, route:null},
+    art:{level:0, progress:0, route:null},
+    sports:{level:0, progress:0, route:null}
+  }
+};
+
+const EDU_NAMES=['幼儿园','小学','中学','大学','硕士','博士'];
+const EDU_CREDITS=[3,10,25,50,80,120];
+const EDU_BONUS=['0%','5%','10%','20%','35%','50%'];
+const SUBJECTS={culture:{name:'文化',icon:'📖',desc:'用文字和思想探索世界'},science:{name:'科学',icon:'🔬',desc:'用逻辑和实验认识世界'},art:{name:'艺术',icon:'🎨',desc:'用美和创造表达世界'},sports:{name:'体育',icon:'⚽',desc:'用身体和意志超越自己'}};
+const COURSE_LEVELS=[
+  {name:'基础课程',times:2,cost:0,exp:20,duration:'20分钟',icon:'📗',credit:1,tier:0},
+  {name:'进阶课程',times:4,cost:30,exp:40,duration:'25分钟',icon:'📘',credit:2,tier:1},
+  {name:'高级课程',times:6,cost:60,exp:70,duration:'30分钟',icon:'📙',credit:3,tier:2},
+  {name:'专家课程',times:8,cost:100,exp:100,duration:'35分钟',icon:'📕',credit:5,tier:3}
+];
+const TIER_COLORS=['t0','t1','t2','t3'];
+const TIER_NAMES=['初级','中级','高级','终极'];
+const ROUTES={culture:[{id:'writing',icon:'✍️',name:'写作线',path:'见习诗人→撰稿人→小说家→文豪',desc:'收入均衡',jobs:['见习诗人','撰稿人','小说家','文豪']},{id:'language',icon:'🌐',name:'语言线',path:'见习翻译→翻译官→同声传译→语言大师',desc:'稳定增长',jobs:['见习翻译','翻译官','同声传译','语言大师']},{id:'media',icon:'📱',name:'传媒线',path:'见习vloger→主播→导演→传媒巨匠',desc:'上限高',jobs:['见习vloger','主播','导演','传媒巨匠']}],science:[{id:'tech',icon:'💻',name:'技术线',path:'见习程序员→程序员→架构师→技术之神',desc:'稳定',jobs:['见习程序员','程序员','架构师','技术之神']},{id:'research',icon:'🧪',name:'研究线',path:'见习实验员→化学师→研究员→科学巨擘',desc:'均衡',jobs:['见习实验员','化学师','研究员','科学巨擘']},{id:'engineering',icon:'🔧',name:'工程线',path:'见习修理工→工程师→建筑师→工程大师',desc:'爆发',jobs:['见习修理工','工程师','建筑师','工程大师']}],art:[{id:'painting',icon:'🖌️',name:'美术线',path:'见习画手→画师→艺术总监→画圣',desc:'均衡',jobs:['见习画手','画师','艺术总监','画圣']},{id:'music',icon:'🎵',name:'音乐线',path:'见习乐手→作曲家→音乐制作人→乐神',desc:'爆发',jobs:['见习乐手','作曲家','音乐制作人','乐神']},{id:'dance',icon:'💃',name:'舞蹈线',path:'见习舞者→编舞→舞团团长→舞王',desc:'稳定',jobs:['见习舞者','编舞','舞团团长','舞王']}],sports:[{id:'compete',icon:'🏃',name:'竞技线',path:'见习运动员→职业选手→冠军→体育传奇',desc:'爆发',jobs:['见习运动员','职业选手','冠军选手','体育传奇']},{id:'train',icon:'🏋️',name:'训练线',path:'见习教练→健身教练→运动经理→金牌教练',desc:'稳定',jobs:['见习教练','健身教练','运动经理','金牌教练']},{id:'cast',icon:'🎙️',name:'解说线',path:'见习解说→体育解说→评论家→名嘴',desc:'均衡',jobs:['见习解说','体育解说','体育评论家','名嘴']}]};
+const ADVENTURE_MAPS=[{name:'小镇公园',icon:'🏕️',cost:30,desc:'轻松散步，遇到新朋友',difficulty:'简单'},{name:'神秘森林',icon:'🌲',cost:50,desc:'深入探索，稀有物品',difficulty:'普通'},{name:'雪山之巅',icon:'🏔️',cost:80,desc:'极限挑战，高风险高回报',difficulty:'困难'},{name:'海底世界',icon:'🐠',cost:100,desc:'未知领域，发现宝藏',difficulty:'困难',locked:true}];
+
+// === 基础函数 ===
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1600)}
+function petTap(){showToast('小灰围着你转了一圈～')}
+function goHome(){showScreen('screen-home')}
+function goMap(){if(state.outingTimer){showToast('小灰还在外面没回来哦～');return}updateMapLocks();showScreen('screen-map')}
+function showActionSheet(html){document.getElementById('action-sheet-content').innerHTML=html;document.getElementById('action-sheet').classList.add('show')}
+function closeActionSheet(){document.getElementById('action-sheet').classList.remove('show')}
+
+// === 出门倒计时系统 (不阻断主页操作) ===
+function handleOutingClick(){
+  if(state.outingTimer){
+    showToast('小灰还没回家哦，请耐心等待～');
+    return;
+  }
+  goMap();
+}
+function startOuting(text, duration, callback){
+  closeActionSheet();
+  showScreen('screen-home');
+  state.outingEnd=Date.now()+duration;
+  state.outingCallback=callback;
+  const cdEl=document.getElementById('dock-countdown');
+  cdEl.classList.remove('hidden');
+  function tick(){
+    const remain=state.outingEnd-Date.now();
+    if(remain<=0){
+      cdEl.classList.add('hidden');
+      state.outingTimer=null;
+      state.outingCallback=null;
+      callback();
+      return;
+    }
+    const s=Math.ceil(remain/1000);
+    cdEl.textContent=(s>=60?Math.floor(s/60)+'分'+('0'+(s%60)).slice(-2)+'秒':s+'秒');
+    state.outingTimer=requestAnimationFrame(tick);
+  }
+  tick();
+  showToast(text);
+}
+
+// === 地图锁 ===
+function updateMapLocks(){
+  const w=document.getElementById('building-work'),a=document.getElementById('building-adventure');
+  if(state.studyCount>=2){state.unlocked.work=true;w.classList.remove('locked')}
+  else{w.classList.add('locked')}
+  if(state.totalEarnings>=100){state.unlocked.adventure=true;a.classList.remove('locked')}
+  else{a.classList.add('locked')}
+}
+
+// === 结算弹窗 ===
+function showResultModal(type, data){
+  const modal=document.getElementById('result-modal');
+  const card=document.getElementById('result-card');
+  const typeLabels={study:'📝 成绩单',work:'💰 工资条',adventure:'🏔️ 明信片'};
+  const typeClass={study:'study',work:'work',adventure:'adventure'};
+  let unlockHtml=data.unlock?`<div class="card-unlock">🔓 ${data.unlock}</div>`:'';
+  card.innerHTML=`
+    <img class="card-img" src="result-sample.png" alt="">
+    <div class="card-body">
+      <span class="card-type ${typeClass[type]}">${typeLabels[type]}</span>
+      <div class="card-title">${data.title}</div>
+      <div class="card-sub">${data.sub}</div>
+      <div class="card-rewards">${data.rewards.map(r=>`<span class="sr">${r}</span>`).join('')}</div>
+      ${unlockHtml}
+      <div class="card-comment">${data.comment}</div>
+      <div class="card-actions">
+        <button class="accept" onclick="closeResultModal()">收下</button>
+        <button class="celebrate" onclick="showToast('小灰开心地转圈圈！')">庆祝</button>
+      </div>
+    </div>`;
+  modal.classList.add('show');
+}
+function closeResultModal(){document.getElementById('result-modal').classList.remove('show')}
+
+// === 学习系统 ===
+function goStudy(){
+  // 浮层选择科目
+  const nextCredits=state.education<5?EDU_CREDITS[state.education]:'已满';
+  const progressPct=state.education<5?Math.min(100,state.credits/EDU_CREDITS[state.education]*100):100;
+  const eduInfo=state.education<5?`学分: ${state.credits}/${nextCredits} → 升${EDU_NAMES[state.education+1]}`:`学分: ${state.credits} (满级)`;
+  let html=`<div class="sheet-title">📚 选择学习科目</div>
+    <div style="margin:8px 0 14px;padding:12px 14px;background:rgba(255,248,220,.9);border-radius:16px;border:1px solid rgba(255,230,150,.5)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+        <span style="font-size:22px">🎓</span>
+        <div><div style="font-size:15px;font-weight:800">学历: ${EDU_NAMES[state.education]}</div><div style="font-size:12px;color:#8a6b22;margin-top:2px">${eduInfo}</div></div>
+      </div>
+      <div style="height:6px;border-radius:6px;background:#ececec;overflow:hidden"><div style="height:100%;width:${progressPct}%;background:linear-gradient(90deg,#ffd037,#ff911c);border-radius:6px;transition:width .4s"></div></div>
+    </div>
+    <div class="list">`;
+  Object.entries(SUBJECTS).forEach(([key,sub])=>{
+    const s=state.subjects[key];
+    const cl=COURSE_LEVELS[Math.min(s.level,3)];
+    const done=s.level>=4;
+    const statusText=done?'已毕业 ✓':TIER_NAMES[s.level]+' · '+s.progress+'/'+cl.times;
+    const tierColor=TIER_COLORS[Math.min(s.level,3)];
+    html+=`<button class="list-card" ${done?'':'onclick="selectSubject(\''+key+'\')"'} style="${done?'opacity:.5':''}">
+      <div class="icon">${sub.icon}</div>
+      <div class="main"><div class="name">${sub.name}</div><div class="meta"><span class="tier-badge ${tierColor}">${statusText}</span>${sub.desc}</div></div>
+    </button>`;
+  });
+  html+=`</div>`;
+  showActionSheet(html);
+}
+
+function selectSubject(key){
+  state.currentSubject=key;
+  const s=state.subjects[key];
+  closeActionSheet();
+  if(s.level>=1&&!s.route){
+    // 需选路线 - 浮层展示
+    setTimeout(()=>showRouteSheet(key),200);
+  } else {
+    setTimeout(()=>showStudyConfirmSheet(key),200);
+  }
+}
+
+function showStudyConfirmSheet(key){
+  const s=state.subjects[key];
+  const cl=COURSE_LEVELS[Math.min(s.level,3)];
+  const tierColor=TIER_COLORS[Math.min(s.level,3)];
+  const routeInfo=s.route?ROUTES[key].find(r=>r.id===s.route):null;
+  let routeNote='';
+  if(s.level>=4&&s.route){routeNote=`<div style="margin-top:12px;padding:10px;background:#e8f5e9;border-radius:12px;font-size:13px;color:#2e7d32">✅ 当前路线已学完！你可以去学习其他科目或路线了。</div>`}
+  showActionSheet(`
+    <div class="sheet-title">📚 ${SUBJECTS[key].name} · <span class="tier-badge ${tierColor}">${COURSE_LEVELS[Math.min(s.level,3)].name}</span></div>
+    <div class="sheet-line"><div class="k">进度</div><div class="v">${s.progress}/${cl.times} 次</div></div>
+    <div class="sheet-line"><div class="k">耗时</div><div class="v">${cl.duration}</div></div>
+    <div class="sheet-line"><div class="k">奖励</div><div class="v">经验+${cl.exp} · 学分+${cl.credit}</div></div>
+    ${cl.cost?`<div class="sheet-line"><div class="k">费用</div><div class="v">${cl.cost}金币</div></div>`:''}
+    ${routeInfo?`<div class="sheet-line"><div class="k">路线</div><div class="v">${routeInfo.name}</div></div>`:''}
+    ${routeNote}
+    <button class="btn-blue sheet-btn" onclick="confirmStudy('${key}')">开始学习</button>
+  `);
+}
+
+function showRouteSheet(key){
+  let html=`<div class="sheet-title">🛤️ 选择专业方向</div>
+    <div style="margin:8px 0 12px;padding:10px;background:#fff8dc;border-radius:12px;font-size:13px;color:#8a6b22">选择后沿此路线成长。<strong>完成全部课程后可去学其他路线。</strong></div>
+    <div class="list">`;
+  ROUTES[key].forEach(r=>{
+    html+=`<button class="list-card" onclick="selectRoute('${key}','${r.id}')"><div class="icon">${r.icon}</div><div class="main"><div class="name">${r.name}</div><div class="meta">${r.path}<br>${r.desc}</div></div></button>`;
+  });
+  html+=`</div>`;
+  showActionSheet(html);
+}
+
+function selectRoute(key,routeId){
+  state.subjects[key].route=routeId;
+  const r=ROUTES[key].find(x=>x.id===routeId);
+  closeActionSheet();
+  showToast('选择了 '+r.name);
+  setTimeout(()=>showStudyConfirmSheet(key),300);
+}
+
+function confirmStudy(key){
+  const s=state.subjects[key],cl=COURSE_LEVELS[Math.min(s.level,3)];
+  if(cl.cost&&state.coins<cl.cost){showToast('金币不足');return}
+  if(cl.cost)state.coins-=cl.cost;
+  closeActionSheet();
+  startOuting('小灰出门学习'+SUBJECTS[key].name+'啦！', 3000, ()=>completeStudy(key));
+}
+
+function completeStudy(key){
+  const s=state.subjects[key],cl=COURSE_LEVELS[Math.min(s.level,3)];
+  const exp=cl.exp,credits=cl.credit;
+  s.progress++;state.studyCount++;state.credits+=credits;
+  if(state.education<5&&state.credits>=EDU_CREDITS[state.education])state.education++;
+  let unlock=null;
+  if(s.progress>=cl.times){
+    s.progress=0;
+    if(s.level===0&&!s.route){
+      s.level=1;
+      showResultModal('study',{
+        title:SUBJECTS[key].name+'基础课程结业',
+        sub:'恭喜完成全部基础课程！',
+        rewards:['📚 经验 +'+exp,'🎓 学分 +'+credits],
+        unlock:'基础课程完毕！请选择专业方向',
+        comment:'"小灰拿到了第一张成绩单，红围巾都飘起来了！接下来要选方向深入钻研啦～"'
+      });
+      return;
+    } else {
+      const oldLevel=s.level;
+      s.level++;
+      if(s.route){
+        const r=ROUTES[key].find(x=>x.id===s.route);
+        const jobIdx=Math.min(oldLevel-1,3);
+        if(r&&r.jobs[jobIdx]) unlock='解锁新职业: '+r.jobs[jobIdx];
+      }
+    }
+  }
+  const extraRewards=['📚 经验 +'+exp,'🎓 学分 +'+credits];
+  if(state.studyCount===2) extraRewards.push('🔓 解锁打工');
+  showResultModal('study',{
+    title:SUBJECTS[key].name+'学习完成',
+    sub:SUBJECTS[key].name+' · '+cl.name,
+    rewards:extraRewards,
+    unlock:unlock,
+    comment:'"今天学了好多新东西！小灰把红围巾整理得端端正正，说下次还想和同学们一起上课。"'
+  });
+}
+
+// === 打工系统 ===
+function goWork(){
+  if(!state.unlocked.work){showToast('完成2次学习后解锁打工');return}
+  const jobs=getAvailableJobs();
+  let html=`<div class="sheet-title">💼 选择职业</div><div class="list" style="margin-top:12px">`;
+  jobs.forEach((j,i)=>{
+    html+=`<button class="list-card" onclick="pickJob(${i})"><div class="icon">${j.icon}</div><div class="main"><div class="name"><span class="tier-badge ${TIER_COLORS[j.tierIdx]}">${TIER_NAMES[j.tierIdx]}</span>${j.name}</div><div class="meta">${j.subject} · ${j.duration}分钟</div></div><div class="price">${j.pay}金</div></button>`;
+  });
+  html+=`</div>`;
+  showActionSheet(html);
+}
+
+function getAvailableJobs(){
+  let jobs=[];
+  Object.entries(state.subjects).forEach(([key,s])=>{
+    if(s.route&&s.level>=1){
+      const r=ROUTES[key].find(x=>x.id===s.route);
+      // 所有已解锁的职业都展示（不替换低级）
+      const maxIdx=Math.min(s.level-1,3);
+      for(let i=0;i<=maxIdx;i++){
+        const base=[15,30,60,120][i],bonus=parseInt(EDU_BONUS[state.education]);
+        jobs.push({name:r.jobs[i],tierIdx:i,icon:r.icon,pay:Math.round(base*(1+bonus/100)),duration:[40,45,50,55][i],subject:SUBJECTS[key].name});
+      }
+    }
+  });
+  if(!jobs.length)jobs=[{name:'水泥工',tierIdx:0,icon:'💼',pay:10,duration:40,subject:'通用'}];
+  // 越赚钱排越前
+  jobs.sort((a,b)=>b.pay-a.pay);
+  window._availableJobs=jobs;
+  return jobs;
+}
+
+function pickJob(idx){
+  closeActionSheet();
+  setTimeout(()=>showWorkConfirmSheet(window._availableJobs[idx]),200);
+}
+
+function showWorkConfirmSheet(job){
+  state.currentJob=job;
+  const hiredName=state.hiredFriend?state.hiredFriend.name:'未雇佣';
+  const buffText=state.hiredFriend?`<span style="color:#0bb76a;font-weight:800">+50% (${Math.round(job.pay*0.5)}金)</span>`:'<span style="color:#999">无加成</span>';
+  const totalPay=state.hiredFriend?Math.round(job.pay*1.5):job.pay;
+  showActionSheet(`
+    <div class="sheet-title">💼 打工确认</div>
+    <div class="sheet-line"><div class="k">同伴</div>
+      <div class="companion">
+        <div class="avatar-penguin"><img src="penguin.png"></div>
+        ${state.hiredFriend?`<div style="display:flex;align-items:center;gap:8px"><div class="avatar-penguin" style="width:36px;height:36px;background:${state.hiredFriend.color}"><span style="font-size:18px">${state.hiredFriend.emoji}</span></div><span style="font-size:13px;font-weight:700">${state.hiredFriend.name}</span></div>`:`<button class="plus" onclick="showHireFriends()">+</button>`}
+        <div class="bonus">友宠buff: ${buffText}</div>
+      </div>
+    </div>
+    <div class="sheet-line"><div class="k">职业</div><div class="v"><span class="tier-badge ${TIER_COLORS[job.tierIdx]}">${TIER_NAMES[job.tierIdx]}</span>${job.name}</div></div>
+    <div class="sheet-line"><div class="k">预期</div><div class="v" style="color:#0bb76a">${totalPay}金币${state.hiredFriend?' (含友宠+50%)':''}</div></div>
+    <div class="sheet-line"><div class="k">耗时</div><div class="v">${job.duration}分钟</div></div>
+    <div class="sheet-line"><div class="k">消耗</div><div class="v">体力-10（当前${state.stamina}）</div></div>
+    <button class="btn-blue sheet-btn" onclick="confirmWork()">开始打工</button>
+  `);
+}
+
+// 好友雇佣列表
+const FRIENDS=[
+  {name:'豆豆',emoji:'🐩',color:'#ffe0e0',owner:'小明',status:'空闲',bonus:'+50%'},
+  {name:'球球',emoji:'🐱',color:'#e0f0ff',owner:'阿杰',status:'空闲',bonus:'+50%'},
+  {name:'旺财',emoji:'🐶',color:'#fff0d0',owner:'小红',status:'打工中',bonus:'+50%'},
+  {name:'咪咪',emoji:'🐈',color:'#e8ffe0',owner:'大伟',status:'空闲',bonus:'+50%'},
+  {name:'小白',emoji:'🐰',color:'#f0e8ff',owner:'莉莉',status:'冒险中',bonus:'+50%'}
+];
+
+function showHireFriends(){
+  closeActionSheet();
+  setTimeout(()=>{
+    let html=`<div class="sheet-title">👥 雇佣好友宠物</div>
+      <div style="margin:8px 0 14px;padding:10px 12px;background:#f0f8ff;border-radius:14px;font-size:12px;line-height:1.6;color:#555">
+        <strong style="color:#222">📋 雇佣规则</strong><br>
+        · 雇佣好友的宠物做同伴，你的打工收入 <strong style="color:#0bb76a">+50%</strong><br>
+        · 你的宠物被好友雇佣时，你也能获得对方收入的 <strong style="color:#0bb76a">10%</strong> 作为挂机收益<br>
+        · 每次打工只能雇佣1只友宠，状态为「空闲」才可雇佣<br>
+        · 被雇佣期间你的宠物不能出门（但你自己可以正常操作）
+      </div>
+      <div class="list">`;
+    FRIENDS.forEach((f,i)=>{
+      const available=f.status==='空闲';
+      html+=`<button class="list-card" ${available?`onclick="hireFriend(${i})"`:''}  style="${available?'':'opacity:.5'}">
+        <div class="icon" style="background:${f.color}">${f.emoji}</div>
+        <div class="main">
+          <div class="name">${f.name} <span style="font-size:12px;color:#888;font-weight:400">主人: ${f.owner}</span></div>
+          <div class="meta">${available?'✅ 空闲可雇佣':'⏳ '+f.status} · 收入buff ${f.bonus}</div>
+        </div>
+      </button>`;
+    });
+    html+=`</div>`;
+    showActionSheet(html);
+  },200);
+}
+
+function hireFriend(idx){
+  state.hiredFriend=FRIENDS[idx];
+  closeActionSheet();
+  showToast('已雇佣 '+FRIENDS[idx].name+' 做同伴！');
+  setTimeout(()=>showWorkConfirmSheet(state.currentJob),300);
+}
+
+function confirmWork(){
+  if(state.stamina<10){showToast('体力不足');return}
+  state.stamina-=10;
+  closeActionSheet();
+  const job=state.currentJob;
+  const multiplier=state.hiredFriend?1.5:1;
+  const friendName=state.hiredFriend?state.hiredFriend.name:null;
+  startOuting('小灰出门打工('+job.name+')啦！', 3000, ()=>{
+    const earned=Math.round(job.pay*multiplier);
+    state.coins+=earned;state.totalEarnings+=earned;
+    const rewards=['🪙 '+earned+'金','📚 经验 +15'];
+    if(friendName) rewards.push('🤝 '+friendName+'协助');
+    showResultModal('work',{
+      title:'打工完成',
+      sub:job.name+' · 收入 '+earned+' 金'+(friendName?' (含友宠加成)':''),
+      rewards:rewards,
+      unlock:null,
+      comment:friendName?
+        '"小灰和'+friendName+'配合默契，效率翻倍！红围巾一甩，金币哗哗入袋。"':
+        '"今天的工作比想象中顺利！小灰把红围巾一甩，认真地把赚到的金币收进小包里。"'
+    });
+    state.hiredFriend=null; // 用完重置
+  });
+}
+
+// === 冒险系统 ===
+function goAdventure(){
+  if(!state.unlocked.adventure){showToast('累计赚100金后解锁冒险');return}
+  let html=`<div class="sheet-title">🏔️ 选择冒险地点</div><div style="margin:10px 0;padding:10px;background:#fff8dc;border-radius:12px;font-size:13px;color:#8a6b22">花费金币冒险，可能触发PK、发现特产或结交新朋友。</div><div class="list">`;
+  ADVENTURE_MAPS.forEach((m,i)=>{
+    const locked=m.locked||state.coins<m.cost;
+    html+=`<button class="list-card" ${locked?'':'onclick="pickAdventure('+i+')"'} style="${locked?'opacity:.4':''}"><div class="icon">${m.icon}</div><div class="main"><div class="name">${m.name}</div><div class="meta">${m.desc} · ${m.difficulty}</div></div><div class="price">${m.cost}金</div></button>`;
+  });
+  html+=`</div>`;
+  showActionSheet(html);
+}
+
+function pickAdventure(idx){
+  const m=ADVENTURE_MAPS[idx];
+  closeActionSheet();
+  setTimeout(()=>{
+    showActionSheet(`
+      <div class="sheet-title">🏔️ 冒险确认</div>
+      <div class="sheet-line"><div class="k">地点</div><div class="v">${m.name}</div></div>
+      <div class="sheet-line"><div class="k">难度</div><div class="v">${m.difficulty}</div></div>
+      <div class="sheet-line"><div class="k">费用</div><div class="v">${m.cost}金币</div></div>
+      <div class="sheet-line"><div class="k">说明</div><div class="v">${m.desc}</div></div>
+      <button class="btn-blue sheet-btn" onclick="confirmAdventure(${idx})">出发冒险</button>
+    `);
+  },200);
+}
+
+function confirmAdventure(idx){
+  const m=ADVENTURE_MAPS[idx];
+  state.coins-=m.cost;
+  closeActionSheet();
+  startOuting('小灰出门去'+m.name+'冒险啦！', 3000, ()=>{
+    const roll=Math.random();
+    if(roll<0.15){
+      showScreen('screen-adventure-result');
+    } else {
+      showResultModal('adventure',{
+        title:'冒险归来',
+        sub:m.name+' · 发现了有趣的东西',
+        rewards:['🪙 '+(m.cost*2)+'金','🎁 获得特产','心情值 ⬆'].slice(0,Math.floor(Math.random()*2)+2),
+        unlock:null,
+        comment:'"小灰从'+m.name+'带回了一张明信片和满满的回忆，红围巾上还沾着露水呢～"'
+      });
+    }
+  });
+}
+
+updateMapLocks();
+</script>
+</body>
+</html>
