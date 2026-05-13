@@ -75,10 +75,10 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit}
 .btn-blue{background:#129cf3;color:white;font-weight:800;font-size:17px;padding:15px 24px;border-radius:28px;width:100%;box-shadow:0 8px 16px rgba(18,156,243,.25)}
 /* 等级颜色标签 */
 .tier-badge{display:inline-block;padding:3px 10px;border-radius:10px;font-size:12px;font-weight:800;margin-right:6px}
-.tier-badge.t0{background:#e8f5e9;color:#2e7d32} /* 初级-绿 */
-.tier-badge.t1{background:#e3f2fd;color:#1565c0} /* 中级-蓝 */
-.tier-badge.t2{background:#fff3e0;color:#e65100} /* 高级-橙 */
-.tier-badge.t3{background:#fce4ec;color:#c62828} /* 终极-红 */
+.tier-badge.t0{background:#e8f5e9;color:#2e7d32}
+.tier-badge.t1{background:#e3f2fd;color:#1565c0}
+.tier-badge.t2{background:#fff3e0;color:#e65100}
+.tier-badge.t3{background:#fce4ec;color:#c62828}
 .list{display:flex;flex-direction:column;gap:10px}
 .list-card{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.84);border-radius:20px;padding:12px 14px;box-shadow:var(--softShadow);border:1px solid rgba(255,255,255,.85)}
 .list-card .icon{width:46px;height:46px;border-radius:15px;background:#fff3cf;display:flex;align-items:center;justify-content:center;font-size:24px;flex:0 0 46px}
@@ -88,25 +88,75 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit}
 .list-card .price{font-size:14px;color:#e79a10;font-weight:900}
 
 /* 结算弹窗 */
-.result-modal{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
+.result-modal{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:16px}
 .result-modal.show{display:flex}
-.result-card{width:100%;max-width:360px;border-radius:28px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.3);animation:slideUp .4s ease-out}
-.result-card .card-img{width:100%;height:180px;object-fit:cover}
-.result-card .card-body{padding:22px;background:#fff}
-.result-card .card-type{display:inline-block;border-radius:12px;padding:4px 12px;font-size:12px;font-weight:800;margin-bottom:10px}
-.result-card .card-type.study{background:#e8f5e9;color:#2e7d32}
-.result-card .card-type.work{background:#fff3e0;color:#e65100}
-.result-card .card-type.adventure{background:#e3f2fd;color:#1565c0}
-.result-card .card-title{font-size:21px;font-weight:900;margin-bottom:5px}
-.result-card .card-sub{font-size:13px;color:#888;margin-bottom:14px}
-.result-card .card-rewards{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
-.result-card .card-rewards .sr{display:inline-flex;align-items:center;gap:4px;border-radius:12px;background:#f5f5f7;padding:5px 10px;font-weight:800;font-size:12px;color:#555}
-.result-card .card-unlock{background:#fff8dc;border-radius:14px;padding:10px 12px;margin-bottom:14px;color:#8a6b22;font-size:13px;font-weight:700}
-.result-card .card-comment{background:#f8f8f8;border-radius:14px;padding:12px;line-height:1.6;color:#555;font-size:13px;margin-bottom:18px}
-.result-card .card-actions{display:flex;gap:12px}
-.result-card .card-actions button{flex:1;height:46px;border-radius:16px;font-weight:800;font-size:15px}
-.result-card .card-actions .accept{background:#129cf3;color:#fff}
-.result-card .card-actions .celebrate{background:#fff6d8;color:#d99810;border:1px solid #f3df9c}
+.result-card{width:100%;max-width:360px;border-radius:28px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.3);animation:slideUp .4s ease-out;max-height:88vh;overflow-y:auto}
+.result-actions{display:flex;gap:12px;margin-top:16px}
+.result-actions button{flex:1;height:46px;border-radius:16px;font-weight:800;font-size:15px}
+.result-actions .accept{background:#129cf3;color:#fff}
+.result-actions .celebrate{background:#fff6d8;color:#d99810;border:1px solid #f3df9c}
+
+/* === 成绩单（学习） === */
+.report-card{background:#fffef8;padding:0}
+.report-header{background:#f5f0e0;padding:18px 20px 14px;border-bottom:2px solid #ddd;position:relative}
+.report-header:after{content:"📎";position:absolute;top:8px;right:16px;font-size:20px}
+.report-school{font-size:11px;color:#888;letter-spacing:2px;text-align:center}
+.report-title{font-size:20px;font-weight:900;text-align:center;margin:4px 0;color:#333}
+.report-info{display:grid;grid-template-columns:1fr 1fr;gap:6px 14px;padding:14px 20px;font-size:13px;border-bottom:1px dashed #e0dcd0}
+.report-info .rk{color:#888}.report-info .rv{font-weight:700;color:#333}
+.report-score{padding:16px 20px;border-bottom:1px dashed #e0dcd0}
+.report-score .score-label{font-size:13px;color:#666;margin-bottom:6px}
+.report-score .score-stars{font-size:24px;letter-spacing:4px}
+.report-score .score-text{font-size:12px;color:#888;margin-top:4px}
+.report-self{padding:16px 20px;border-bottom:1px dashed #e0dcd0}
+.report-self .self-label{font-size:12px;color:#888;margin-bottom:8px}
+.report-self .self-text{font-family:"Courier New",monospace;font-size:14px;color:#2c5282;line-height:1.8;transform:rotate(-0.5deg);border-bottom:1px solid #d4e4f7;padding-bottom:2px;font-style:italic}
+.report-teacher{padding:16px 20px;border-bottom:1px dashed #e0dcd0}
+.report-teacher .teacher-label{font-size:12px;color:#888;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.report-teacher .teacher-text{font-size:13px;color:#444;line-height:1.7;background:#faf8f0;border-radius:12px;padding:12px;border-left:3px solid #e8c84c}
+.report-rewards{padding:14px 20px;display:flex;flex-wrap:wrap;gap:8px}
+.report-rewards .rw{display:inline-flex;align-items:center;gap:4px;border-radius:10px;background:#e8f5e9;padding:4px 10px;font-weight:700;font-size:12px;color:#2e7d32}
+.report-footer{padding:0 20px 20px}
+
+/* === 工资条（打工） === */
+.payslip{background:#fff;padding:0;font-size:13px;position:relative}
+.payslip:before{content:"";position:absolute;top:0;left:0;right:0;height:6px;background:repeating-linear-gradient(90deg,#222 0,#222 4px,transparent 4px,transparent 8px)}
+.payslip-header{padding:20px 20px 12px;text-align:center;border-bottom:2px dashed #ddd;position:relative}
+.payslip-header .pay-icon{font-size:32px;margin-bottom:4px}
+.payslip-header .pay-title{font-size:18px;font-weight:900;color:#222}
+.payslip-header .pay-date{font-size:11px;color:#999;margin-top:4px}
+.payslip-header .pay-stamp{position:absolute;top:16px;right:16px;width:42px;height:42px;border:2px solid #e65100;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#e65100;transform:rotate(-15deg);opacity:.7}
+.payslip-body{padding:16px 20px}
+.payslip-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px dotted #eee}
+.payslip-row .pr-label{color:#555}.payslip-row .pr-value{font-weight:800;color:#333}
+.payslip-row .pr-value.income{color:#0bb76a}
+.payslip-row .pr-value.expense{color:#ff3b30}
+.payslip-total{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:#f8f8f0;border-top:2px solid #222;border-bottom:2px solid #222;margin:0}
+.payslip-total .pt-label{font-size:15px;font-weight:900;color:#222}
+.payslip-total .pt-value{font-size:22px;font-weight:900;color:#0bb76a}
+.payslip-note{padding:14px 20px;font-size:12px;color:#888;line-height:1.6;font-style:italic}
+.payslip-footer{padding:0 20px 20px}
+.payslip:after{content:"";position:absolute;bottom:0;left:0;right:0;height:6px;background:repeating-linear-gradient(90deg,#222 0,#222 4px,transparent 4px,transparent 8px)}
+
+/* === 明信片（冒险） === */
+.postcard{background:#fdfbf5;padding:0;position:relative;border:1px solid #e8e0d0}
+.postcard-top{display:flex;height:180px;border-bottom:1px solid #e0dcd0}
+.postcard-img{width:55%;height:100%;object-fit:cover;border-right:1px solid #e0dcd0}
+.postcard-right{flex:1;padding:14px;display:flex;flex-direction:column;position:relative}
+.postcard-right .stamp{width:48px;height:56px;border:1.5px solid #c0392b;display:flex;align-items:center;justify-content:center;font-size:24px;align-self:flex-end;position:relative}
+.postcard-right .stamp:after{content:"";position:absolute;inset:-3px;border:1px dashed #c0392b;opacity:.4}
+.postcard-right .postmark{position:absolute;top:10px;right:10px;width:52px;height:52px;border:1.5px solid rgba(0,0,0,.2);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(12deg);font-size:8px;color:#666;line-height:1.3;font-weight:700;opacity:.6}
+.postcard-right .airmail{margin-top:auto;display:flex;align-items:center;gap:6px;font-size:10px;color:#666;font-weight:700;letter-spacing:1px;border-top:1px solid #e0dcd0;padding-top:8px}
+.postcard-right .airmail:before{content:"✈️";font-size:14px}
+.postcard-body{padding:16px 20px}
+.postcard-body .pc-greeting{font-family:"Courier New",monospace;font-size:14px;color:#333;line-height:1.8;font-style:italic;transform:rotate(-0.3deg);margin-bottom:12px;min-height:60px}
+.postcard-body .pc-specialty{display:flex;align-items:center;gap:10px;background:#fff8e8;border-radius:14px;padding:10px 14px;border:1px dashed #e8c84c;margin-bottom:12px}
+.postcard-body .pc-specialty .sp-icon{font-size:28px}
+.postcard-body .pc-specialty .sp-info{font-size:12px;color:#666;line-height:1.5}
+.postcard-body .pc-specialty .sp-name{font-weight:800;color:#333;font-size:13px}
+.postcard-rewards{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.postcard-rewards .pr{display:inline-flex;align-items:center;gap:4px;border-radius:10px;background:#e3f2fd;padding:4px 10px;font-weight:700;font-size:11px;color:#1565c0}
+.postcard-footer{padding:0 20px 18px}
 
 /* 地图 */
 .map-bg{min-height:100vh;background:url('map-bg.png') center/cover no-repeat;position:relative}
@@ -166,6 +216,98 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit}
 
 .toast{position:fixed;top:80px;left:50%;transform:translateX(-50%);z-index:999;background:rgba(0,0,0,.8);color:#fff;border-radius:20px;padding:12px 24px;font-size:15px;display:none}
 .toast.show{display:block;animation:fade .18s}
+
+/* 图鉴系统 */
+.atlas-page{min-height:100vh;background:linear-gradient(135deg,#f8f4ec,#eae3d8);padding-top:112px;padding-bottom:40px}
+.atlas-page .top-title{top:72px}
+.atlas-tabs{display:flex;gap:8px;padding:0 20px;margin-bottom:18px;overflow-x:auto}
+.atlas-tab{padding:8px 16px;border-radius:20px;font-size:13px;font-weight:700;background:rgba(255,255,255,.7);color:#666;white-space:nowrap;border:1px solid rgba(0,0,0,.06);transition:all .2s}
+.atlas-tab.active{background:#129cf3;color:#fff;border-color:#129cf3}
+.atlas-tab.locked{opacity:.5;background:rgba(200,200,200,.5)}
+.atlas-progress{margin:0 20px 16px;padding:14px 16px;background:rgba(255,255,255,.8);border-radius:16px;border:1px solid rgba(0,0,0,.04)}
+.atlas-progress .prog-title{font-size:14px;font-weight:800;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.atlas-progress .prog-bar{height:8px;border-radius:8px;background:#e8e4dc;overflow:hidden}
+.atlas-progress .prog-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#ffd037,#ff911c);transition:width .4s}
+.atlas-progress .prog-reward{margin-top:8px;font-size:12px;color:#8a6b22;font-weight:600}
+.atlas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 20px}
+.atlas-item{background:rgba(255,255,255,.85);border-radius:16px;padding:14px 10px;text-align:center;border:1px solid rgba(0,0,0,.04);position:relative;transition:all .2s}
+.atlas-item.collected{border-color:rgba(18,156,243,.2);background:rgba(255,255,255,.95)}
+.atlas-item.uncollected{opacity:.6}
+.atlas-item .item-icon{font-size:32px;margin-bottom:6px}
+.atlas-item .item-name{font-size:12px;font-weight:700;color:#333;margin-bottom:2px}
+.atlas-item .item-info{font-size:10px;color:#888;line-height:1.4}
+.atlas-item .item-count{position:absolute;top:6px;right:8px;font-size:10px;font-weight:800;color:#129cf3;background:#e9f5ff;padding:2px 6px;border-radius:8px}
+.atlas-item.uncollected .item-icon{filter:grayscale(1) brightness(1.3)}
+.atlas-unlock-banner{margin:0 20px 16px;padding:14px 16px;background:linear-gradient(135deg,#fff8dc,#fff3c4);border-radius:16px;border:1px solid rgba(255,200,60,.3);text-align:center}
+.atlas-unlock-banner .ub-icon{font-size:28px;margin-bottom:4px}
+.atlas-unlock-banner .ub-title{font-size:14px;font-weight:800;color:#8a6b22}
+.atlas-unlock-banner .ub-desc{font-size:12px;color:#a88830;margin-top:4px}
+
+/* 技能书 */
+.skill-banner{margin:0 20px 12px;padding:12px 16px;background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border-radius:14px;border:1px solid rgba(46,125,50,.15);display:flex;align-items:center;gap:10px}
+.skill-banner .sb-icon{font-size:24px}
+.skill-banner .sb-text{font-size:13px;color:#2e7d32;font-weight:700}
+.skill-banner .sb-sub{font-size:11px;color:#558b2f;margin-top:2px}
+
+/* 对讲 */
+.chat-page{height:100vh;background:#f5f3ee;display:flex;flex-direction:column;overflow:hidden}
+.chat-header{flex-shrink:0;z-index:30;background:rgba(255,255,250,.95);backdrop-filter:blur(16px);padding:54px 20px 12px;border-bottom:1px solid rgba(0,0,0,.06)}
+.chat-header .ch-title{font-size:17px;font-weight:800;text-align:center}
+.chat-status{margin-top:8px;padding:8px 14px;background:rgba(18,156,243,.08);border-radius:12px;display:flex;align-items:center;gap:8px;font-size:12px;color:#129cf3;font-weight:600}
+.chat-status.hidden{display:none}
+.chat-status .cs-dot{width:6px;height:6px;border-radius:50%;background:#129cf3;animation:blink 1.5s infinite}
+.chat-messages{flex:1;padding:16px 20px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;-webkit-overflow-scrolling:touch}
+.chat-msg{max-width:78%;padding:10px 14px;border-radius:16px;font-size:14px;line-height:1.6;animation:slideUp .3s ease-out}
+.chat-msg.pet{align-self:flex-start;background:#fff;border:1px solid rgba(0,0,0,.05);border-bottom-left-radius:4px;position:relative;margin-left:28px}
+.chat-msg.pet:before{content:"🐧";position:absolute;left:-28px;top:6px;font-size:16px}
+.chat-msg.user{align-self:flex-end;background:#129cf3;color:#fff;border-bottom-right-radius:4px}
+.chat-msg .msg-time{font-size:10px;color:#aaa;margin-top:4px;display:block}
+.chat-msg.user .msg-time{color:rgba(255,255,255,.6)}
+.chat-input{flex-shrink:0;padding:12px 16px;background:#fff;border-top:1px solid rgba(0,0,0,.06);display:flex;gap:10px;align-items:center}
+.chat-input input{flex:1;height:40px;border:1px solid #e8e8e8;border-radius:20px;padding:0 16px;font-size:14px;outline:none}
+.chat-input input:focus{border-color:#129cf3}
+.chat-input button{width:40px;height:40px;border-radius:50%;background:#129cf3;color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center}
+
+/* 首页想法气泡 */
+.thought-bubble{position:absolute;left:50%;transform:translateX(-50%);top:35%;z-index:20;background:rgba(255,255,250,.95);backdrop-filter:blur(12px);border-radius:18px;padding:10px 16px;box-shadow:0 6px 20px rgba(0,0,0,.1);font-size:13px;color:#333;max-width:240px;text-align:center;line-height:1.5;animation:slideUp .35s ease-out;display:none;cursor:pointer;border:1px solid rgba(0,0,0,.05)}
+.thought-bubble:after{content:"";position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-top:8px solid rgba(255,255,250,.95)}
+.thought-bubble.show{display:block}
+
+/* 出门历史 */
+.history-page{min-height:100vh;background:linear-gradient(135deg,#f8f4ec,#eae3d8);padding-top:112px;padding-bottom:40px}
+.history-page .top-title{top:72px}
+.history-list{padding:0 20px;display:flex;flex-direction:column;gap:10px}
+.history-card{background:rgba(255,255,255,.9);border-radius:18px;padding:14px 16px;border:1px solid rgba(0,0,0,.04);box-shadow:0 4px 12px rgba(0,0,0,.04);display:flex;align-items:center;gap:12px;cursor:pointer}
+.history-card .hc-icon{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.history-card .hc-icon.study{background:#e3f2fd}
+.history-card .hc-icon.work{background:#fff3e0}
+.history-card .hc-icon.adventure{background:#e8f5e9}
+.history-card .hc-main{flex:1;min-width:0}
+.history-card .hc-title{font-size:14px;font-weight:700;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.history-card .hc-sub{font-size:12px;color:#888;margin-top:2px;display:flex;align-items:center;gap:6px}
+.history-card .hc-time{font-size:11px;color:#aaa;flex-shrink:0}
+.history-card .hc-rewards{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap}
+.history-card .hc-tag{font-size:10px;padding:2px 8px;border-radius:8px;background:#f0f0f0;color:#555;font-weight:600}
+.history-card .hc-tag.skill{background:#e8f5e9;color:#2e7d32}
+.history-card .hc-tag.specialty{background:#fff3e0;color:#e65100}
+.history-empty{text-align:center;padding:60px 20px;color:#999;font-size:14px}
+
+/* 历史详情 */
+.detail-page{min-height:100vh;background:#fff;padding-top:100px;padding-bottom:40px}
+.detail-page .top-title{top:72px}
+.detail-header{margin:0 20px;padding:20px;background:linear-gradient(135deg,#f8f6f0,#efeae0);border-radius:20px;text-align:center;margin-bottom:20px}
+.detail-header .dh-icon{font-size:40px;margin-bottom:8px}
+.detail-header .dh-title{font-size:18px;font-weight:800;color:#222}
+.detail-header .dh-time{font-size:12px;color:#888;margin-top:4px}
+.detail-section{margin:0 20px 16px;padding:16px;background:#f9f9f6;border-radius:16px}
+.detail-section .ds-label{font-size:12px;color:#888;font-weight:600;margin-bottom:8px}
+.detail-section .ds-content{font-size:14px;color:#333;line-height:1.7}
+.detail-section .ds-tags{display:flex;flex-wrap:wrap;gap:6px}
+.detail-section .ds-tag{padding:4px 12px;border-radius:10px;font-size:12px;font-weight:700}
+.detail-section .ds-tag.coin{background:#fff8dc;color:#8a6b22}
+.detail-section .ds-tag.exp{background:#e3f2fd;color:#1565c0}
+.detail-section .ds-tag.skill{background:#e8f5e9;color:#2e7d32}
+.detail-section .ds-tag.specialty{background:#fff3e0;color:#e65100}
 </style>
 </head>
 <body>
@@ -182,7 +324,7 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit}
     <div class="statusbar"><div>9:00</div><div class="status-icons"><div class="signal"><i></i><i></i><i></i><i></i></div><div class="wifi"></div><div class="battery"><i></i></div></div></div>
     <div class="home-toolbar">
       <div class="left-group">
-        <button class="circle-btn" onclick="showToast('返回')">‹</button>
+        <button class="circle-btn" onclick="showToast('返回')">&#x2039;</button>
         <div class="pet-chip">
           <div class="avatar-penguin"><img src="penguin.png" alt="小灰"></div>
           <div class="info"><span class="name">小灰</span><span class="divider"></span><span class="owner">ee</span></div>
@@ -195,10 +337,11 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit}
       <button class="mini">👥</button>
       <button class="mini" style="flex-direction:column;gap:2px;height:auto;padding:8px 0;border-radius:22px;line-height:1.1"><span style="font-size:16px">🐾</span><span class="paw-count">999</span></button>
     </div>
+    <div class="thought-bubble" id="thought-bubble" onclick="goChat()"></div>
     <div class="home-pet" onclick="petTap()"><img class="penguin-img" src="penguin.png" alt="小灰"></div>
     <div class="action-dock">
       <button class="dock-item" onclick="showToast('喂食')"><span class="ico">🍲</span><span class="lbl">喂食</span></button>
-      <button class="dock-item" onclick="showToast('对讲')"><span class="ico">📱</span><span class="lbl">对讲</span></button>
+      <button class="dock-item" onclick="goChat()"><span class="ico">📱</span><span class="lbl">对讲</span></button>
       <button class="dock-item" onclick="showToast('洗澡')"><span class="ico">🚿</span><span class="lbl">洗澡</span></button>
       <button class="dock-item" id="dock-outing" onclick="handleOutingClick()" style="border-color:#129cf3"><span class="ico" style="font-size:28px">📍</span><span class="lbl">出门</span><div class="dock-timer hidden" id="dock-countdown"></div></button>
     </div>
@@ -209,13 +352,16 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit}
 <div class="screen" id="screen-map">
   <div class="map-bg">
     <div class="statusbar"><div>9:00</div><div class="status-icons"><div class="signal"><i></i><i></i><i></i><i></i></div><div class="wifi"></div><div class="battery"><i></i></div></div></div>
-    <button class="circle-btn back-btn" onclick="goHome()">‹</button>
+    <button class="circle-btn back-btn" onclick="goHome()">&#x2039;</button>
     <div class="top-title">出门</div>
-    <button class="circle-btn right-btn" onclick="showScreen('screen-guide')" style="font-size:18px">📖</button>
+    <div style="position:absolute;top:58px;right:20px;display:flex;gap:8px;z-index:41">
+      <button class="circle-btn" onclick="goHistory()" style="font-size:16px;width:40px;height:40px">📋</button>
+      <button class="circle-btn" onclick="showScreen('screen-guide')" style="font-size:16px;width:40px;height:40px">📖</button>
+    </div>
     <div class="map-stage">
-      <div class="place school" id="building-study" onclick="goStudy()"><div class="label"><div class="t">学习 ›</div><div class="d">可获得学习经验值</div></div></div>
-      <div class="place shop" id="building-work" onclick="goWork()"><div class="label"><div class="t">打工 ›</div><div class="d">可获得金币</div><div class="lock-text">🔒 学习2次解锁</div></div></div>
-      <div class="place adventure" id="building-adventure" onclick="goAdventure()"><div class="label"><div class="t">冒险 ›</div><div class="d">可能遇到特别的事</div><div class="lock-text">🔒 赚100金解锁</div></div></div>
+      <div class="place school" id="building-study" onclick="goStudy()"><div class="label"><div class="t">学习 &#x203A;</div><div class="d">可获得学习经验值</div></div></div>
+      <div class="place shop" id="building-work" onclick="goWork()"><div class="label"><div class="t">打工 &#x203A;</div><div class="d">可获得金币</div><div class="lock-text">🔒 学习2次解锁</div></div></div>
+      <div class="place adventure" id="building-adventure" onclick="goAdventure()"><div class="label"><div class="t">冒险 &#x203A;</div><div class="d">可能遇到特别的事</div><div class="lock-text">🔒 赚500金解锁</div></div></div>
     </div>
   </div>
 </div>
@@ -224,45 +370,60 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit}
 <div class="screen" id="screen-guide">
   <div class="page">
     <div class="statusbar"><div>9:00</div><div class="status-icons"><div class="signal"><i></i><i></i><i></i><i></i></div><div class="wifi"></div><div class="battery"><i></i></div></div></div>
-    <button class="circle-btn back-btn" onclick="goMap()">‹</button>
+    <button class="circle-btn back-btn" onclick="guideBack()">&#x2039;</button>
     <div class="top-title">玩法介绍</div>
     <div class="content">
-      <div class="guide-section">
+      <div class="guide-section" id="guide-study">
         <div class="guide-title">📚 学习系统</div>
         <div class="guide-text">
-          <strong>升级规则：</strong>每个科目有「基础→进阶→高级→专家」四个阶段。完成当前阶段后自动升级，前阶段不可再学。累计学分可升学历。<br><br>
-          <strong>路线选择：</strong>完成基础课程后选择专业方向。<strong>完成当前路线全部课程后，可以去学习其他路线。</strong>不同方向决定职业：
+          <strong>升级规则：</strong>4个科目（文化/科学/艺术/体育），每科有「基础→进阶→高级→专家」四个阶段。完成当前阶段后自动升级。累计学分可升学历。<br><br>
+          <strong>Skill习得：</strong>每次学习有几率习得一个和科目相关的Skill，重复获得可升级。
         </div>
-        <table class="guide-table">
-          <tr><th>科目</th><th>路线</th><th>解锁职业</th></tr>
-          <tr><td>文化</td><td>写作/语言/传媒</td><td>诗人→小说家→文豪 等</td></tr>
-          <tr><td>科学</td><td>技术/研究/工程</td><td>程序员→架构师→技术之神 等</td></tr>
-          <tr><td>艺术</td><td>美术/音乐/舞蹈</td><td>画师→艺术总监→画圣 等</td></tr>
-          <tr><td>体育</td><td>竞技/训练/解说</td><td>运动员→冠军→体育传奇 等</td></tr>
-        </table>
       </div>
-      <div class="guide-section">
+      <div class="guide-section" id="guide-work">
         <div class="guide-title">💼 打工系统</div>
         <div class="guide-text">
-          <strong>职业解锁：</strong>升课程阶段解锁更高级职业，所有已解锁职业均可选择，越赚钱的排越前面。<br><br>
-          <strong>雇佣规则：</strong>可邀请好友宠物做同伴，获得50%金币加成。每次消耗10体力，收入=基础工资×(1+学历加成)×(1+同伴加成)。
+          <strong>职业解锁：</strong>职业通过学习科目的组合解锁。例如：「新闻编辑」需要文化进阶+科学基础，「医生」需要科学高级+体育进阶。<br><br>
+          <strong>雇佣规则：</strong>可邀请好友宠物做同伴，获得50%金币加成。每次消耗10体力。
         </div>
+        <table class="guide-table">
+          <tr><th>职业</th><th>解锁条件</th><th>收入</th></tr>
+          <tr><td>服务员</td><td>无</td><td>10金</td></tr>
+          <tr><td>新闻编辑</td><td>文化进阶</td><td>30金</td></tr>
+          <tr><td>程序员</td><td>科学高级</td><td>45金</td></tr>
+          <tr><td>导演</td><td>艺术高级+文化高级</td><td>70金</td></tr>
+          <tr><td>CEO</td><td>文化高级+科学高级+艺术进阶</td><td>100金</td></tr>
+        </table>
       </div>
-      <div class="guide-section">
+      <div class="guide-section" id="guide-adventure">
         <div class="guide-title">🏔️ 冒险系统</div>
         <div class="guide-text">
-          <strong>收集概率：</strong><br>
-          · 新朋友（30%）· 特产道具（25%）· 金币宝箱（20%）<br>· PK挑战（15%）· 特殊事件（10%）
+          <strong>冒险收获：</strong><br>
+          · 特产道具（60%）— 收集图鉴，未来可制作食物/装饰<br>
+          · 偷师Skill（20%）— 观察其他宠物，领悟新技能<br>
+          · PK挑战（15%）— 随机比拼维度<br>
+          · 金币奖励（100%）— 每次冒险必得
         </div>
       </div>
-      <div class="guide-section">
+      <div class="guide-section" id="guide-pk">
         <div class="guide-title">🥊 PK 系统</div>
         <div class="guide-text">
-          <strong>胜负 = </strong>学历（40%）+ 科目能力（30%）+ 活跃度（20%）+ 随机（10%）<br><br>
-          <strong>战斗方式：</strong>宠物运用所学科目战斗——文化「写诗攻击」、科学「化学烟雾弹」、艺术「音乐催眠」、体育「正面肉搏」。不是只有体育才能打！<br><br>
-          · 冒险中随机触发，胜利获1.5倍金币<br>
-          · 学历越高、科目越强 → 胜率越大<br>
-          · 胜利提升属性值（智力/运动/心情/魅力）
+          <strong>规则：</strong>系统随机抽取一个维度进行比拼：<br><br>
+          · 🎓 <strong>学历维度</strong> — 比较双方学历等级<br>
+          · 🪙 <strong>金币维度</strong> — 比较双方金币数量<br>
+          · 👥 <strong>社交维度</strong> — 比较双方好友数量<br><br>
+          随机抽维度，单项比大小，胜者获得1.5倍金币奖励！
+        </div>
+      </div>
+      <div class="guide-section" id="guide-skill">
+        <div class="guide-title">🎓 Skill 系统</div>
+        <div class="guide-text">
+          <strong>习得方式：</strong><br>
+          · 学习：40%概率习得学科相关Skill<br>
+          · 打工：25%概率习得职业相关Skill<br>
+          · 冒险偷师：20%概率观察其他宠物领悟Skill<br><br>
+          <strong>等级：</strong>Lv1入门 → Lv2熟练(重复×3) → Lv3精通(重复×8)<br>
+          <strong>运用：</strong>已学Skill可在对讲中展示，如背诗、算账等
         </div>
       </div>
     </div>
@@ -273,25 +434,70 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit}
 <div class="screen" id="screen-adventure-result">
   <div class="result-page">
     <div class="statusbar"><div>9:00</div><div class="status-icons"><div class="signal"><i></i><i></i><i></i><i></i></div><div class="wifi"></div><div class="battery"><i></i></div></div></div>
-    <button class="circle-btn back-btn" onclick="goHome()">‹</button>
+    <button class="circle-btn back-btn" onclick="goHome()">&#x2039;</button>
     <div class="result-hero">
-      <div class="profile-float"><div class="avatar-penguin"><img src="penguin.png"></div><div><div class="n">豆豆</div><div class="o">主人: ee(好友)</div></div><div class="arr">›</div></div>
+      <div class="profile-float"><div class="avatar-penguin"><img src="penguin.png"></div><div><div class="n">豆豆</div><div class="o">主人: ee(好友)</div></div><div class="arr">&#x203A;</div></div>
     </div>
-    <div class="result-content">
-      <div class="pk-head"><div class="pk-title">🥊 PK</div><div class="pk-status">😆 大获全胜</div></div>
-      <div class="reward-pills">
-        <div class="pill"><span class="multi">1.5倍</span>🪙 50</div>
-        <div class="pill">智力值 <span class="up">⬆</span></div>
-        <div class="pill">运动值 <span class="up">⬆</span></div>
-        <div class="pill">心情值 <span class="up">⬆</span></div>
-        <div class="pill">魅力值 <span class="down">⬇</span></div>
-      </div>
-      <div class="timeline">
-        <div class="tl"><div class="time">23:00</div><div class="txt">小灰运用文化课所学，即兴吟诗攻击："你虽力大如牛，我却笔下生花！"对手攻击力下降！</div></div>
-        <div class="tl"><div class="time">23:01</div><div class="txt">豆豆使出"旋风扫堂腿"，小灰灵巧闪避，用写作课练就的口才进行心理战。</div></div>
-        <div class="tl"><div class="time">23:02</div><div class="txt">小灰用科学知识制造小烟雾弹，趁乱发动最后一击！</div></div>
-      </div>
-      <div class="pager"><button class="pg">‹</button><div class="pgnum">5/10</div><button class="pg">›</button></div>
+    <div class="result-content" id="pk-result-content">
+    </div>
+  </div>
+</div>
+
+<!-- 特产图鉴 -->
+<div class="screen" id="screen-atlas">
+  <div class="atlas-page">
+    <div class="statusbar"><div>9:00</div><div class="status-icons"><div class="signal"><i></i><i></i><i></i><i></i></div><div class="wifi"></div><div class="battery"><i></i></div></div></div>
+    <button class="circle-btn back-btn" onclick="goMap()">&#x2039;</button>
+    <div class="top-title">特产图鉴</div>
+    <div id="atlas-tabs" class="atlas-tabs"></div>
+    <div id="atlas-progress"></div>
+    <div id="atlas-content"></div>
+  </div>
+</div>
+
+<!-- 技能书 -->
+<div class="screen" id="screen-skills">
+  <div class="atlas-page">
+    <div class="statusbar"><div>9:00</div><div class="status-icons"><div class="signal"><i></i><i></i><i></i><i></i></div><div class="wifi"></div><div class="battery"><i></i></div></div></div>
+    <button class="circle-btn back-btn" onclick="goMap()">&#x2039;</button>
+    <div class="top-title">技能书</div>
+    <div id="skills-content"></div>
+  </div>
+</div>
+
+<!-- 出门历史列表 -->
+<div class="screen" id="screen-history">
+  <div class="history-page">
+    <div class="statusbar"><div>9:00</div><div class="status-icons"><div class="signal"><i></i><i></i><i></i><i></i></div><div class="wifi"></div><div class="battery"><i></i></div></div></div>
+    <button class="circle-btn back-btn" onclick="goMap()">&#x2039;</button>
+    <div class="top-title">出门记录</div>
+    <div id="history-list"></div>
+  </div>
+</div>
+
+<!-- 出门历史详情 -->
+<div class="screen" id="screen-history-detail">
+  <div class="detail-page">
+    <div class="statusbar"><div>9:00</div><div class="status-icons"><div class="signal"><i></i><i></i><i></i><i></i></div><div class="wifi"></div><div class="battery"><i></i></div></div></div>
+    <button class="circle-btn back-btn" onclick="showScreen('screen-history')">&#x2039;</button>
+    <div class="top-title">详情</div>
+    <div id="history-detail-content"></div>
+  </div>
+</div>
+
+<!-- 对讲 -->
+<div class="screen" id="screen-chat">
+  <div class="chat-page">
+    <div class="chat-header">
+      <div class="statusbar" style="position:relative"><div>9:00</div><div class="status-icons"><div class="signal"><i></i><i></i><i></i><i></i></div><div class="wifi"></div><div class="battery"><i></i></div></div></div>
+      <button class="circle-btn back-btn" onclick="goHome()" style="position:absolute;top:58px;left:20px">&#x2039;</button>
+      <div class="ch-title">对讲 · 小灰</div>
+      <div class="chat-status hidden" id="chat-status"><div class="cs-dot"></div><span id="chat-status-text">小灰正在学习中...</span></div>
+    </div>
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-input">
+      <input type="text" id="chat-input" placeholder="和小灰说点什么..." onkeydown="if(event.key==='Enter')sendChat()">
+      <button onclick="sendChat()">&#x2191;</button>
     </div>
   </div>
 </div>
@@ -302,35 +508,220 @@ button{font:inherit;border:none;background:none;cursor:pointer;color:inherit}
 </div>
 
 <script>
-// === 状态 (重置为初始体验) ===
+// === 状态 ===
 const state={
-  coins:80, stamina:50, studyCount:0, totalEarnings:0,
-  credits:0, education:0, // 幼儿园
+  coins:800, stamina:50, studyCount:0, totalEarnings:0,
+  credits:0, semester:1,
   currentSubject:null, currentJob:null, hiredFriend:null,
-  outingTimer:null, outingCallback:null, outingEnd:0,
+  outingTimer:null, outingCallback:null, outingEnd:0, outingType:null, outingDetail:'', outingMsgTimer:null, outingMsgTimer2:null, bubbleTimer:null,
   unlocked:{work:false, adventure:false},
   subjects:{
-    culture:{level:0, progress:0, route:null},
-    science:{level:0, progress:0, route:null},
-    art:{level:0, progress:0, route:null},
-    sports:{level:0, progress:0, route:null}
-  }
+    culture:{level:0, progress:0},
+    science:{level:0, progress:0},
+    art:{level:0, progress:0},
+    sports:{level:0, progress:0}
+  },
+  atlas:{
+    'park_flower':{count:3, firstTime:'5/9 14:20'},
+    'park_leaf':{count:1, firstTime:'5/9 15:01'},
+    'park_stone':{count:2, firstTime:'5/10 09:33'}
+  },
+  atlasMapUnlocked:[true, false, false, false],
+  currentAtlasTab:0,
+  skills:{
+    'culture_poem':{level:1, count:1, acquiredAt:'5/10 10:00'},
+    'science_math':{level:2, count:4, acquiredAt:'5/8 14:30'},
+    'job_coffee':{level:1, count:1, acquiredAt:'5/11 09:15'}
+  },
+  friends:5,
+  history:[
+    {id:1,type:'study',icon:'📖',title:'学习文化·基础课程',time:'5/10 10:30',duration:'20分钟',rewards:['📚 经验+20','🎓 学分+1'],skill:{name:'唐诗300首',icon:'📜',level:1},specialty:null,selfComment:'今天学得很开心，虽然有点累但收获满满！',teacherComment:'小灰同学上课认真听讲，积极回答问题，继续保持！',unlock:null},
+    {id:2,type:'work',icon:'🍽️',title:'打工·服务员',time:'5/10 14:00',duration:'40分钟',rewards:['🪙 +10金','📚 经验+15'],skill:null,specialty:null,comment:'今天的工作比想象中顺利！小灰认真地收好10金币。'},
+    {id:3,type:'adventure',icon:'🏕️',title:'冒险·小镇公园',time:'5/11 09:00',duration:'30分钟',rewards:['🪙 +60金','🎁 特产','心情值⬆'],skill:{name:'四则运算',icon:'🧮',level:2},specialty:{name:'樱花瓣',icon:'🌸'},greeting:'亲爱的主人，今天在小镇公园看到了好多有趣的事情！',stealText:'小灰在小镇公园偷偷观察了一只正在做数学题的宠物...回来后竟然学会了！'}
+  ],
+  historyId:3
 };
 
-const EDU_NAMES=['幼儿园','小学','中学','大学','硕士','博士'];
-const EDU_CREDITS=[3,10,25,50,80,120];
-const EDU_BONUS=['0%','5%','10%','20%','35%','50%'];
-const SUBJECTS={culture:{name:'文化',icon:'📖',desc:'用文字和思想探索世界'},science:{name:'科学',icon:'🔬',desc:'用逻辑和实验认识世界'},art:{name:'艺术',icon:'🎨',desc:'用美和创造表达世界'},sports:{name:'体育',icon:'⚽',desc:'用身体和意志超越自己'}};
+// === 常量 ===
+// === 学识等级系统（无上限） ===
+// 每5学分升1级，打工加成=等级×1%
+function getKnowledgeLvl(credits){return Math.floor(credits/5)}
+function getWorkBonus(credits){return getKnowledgeLvl(credits)} // 百分比
+function getNextLvlCredits(credits){return (getKnowledgeLvl(credits)+1)*5}
+const SUBJECTS={culture:{name:'文化',icon:'📖',desc:'扩充文化知识'},science:{name:'科学',icon:'🔬',desc:'掌握科学技能'},art:{name:'艺术',icon:'🎨',desc:'培养艺术才能'},sports:{name:'体育',icon:'⚽',desc:'锻炼身体素质'}};
 const COURSE_LEVELS=[
-  {name:'基础课程',times:2,cost:0,exp:20,duration:'20分钟',icon:'📗',credit:1,tier:0},
-  {name:'进阶课程',times:4,cost:30,exp:40,duration:'25分钟',icon:'📘',credit:2,tier:1},
-  {name:'高级课程',times:6,cost:60,exp:70,duration:'30分钟',icon:'📙',credit:3,tier:2},
-  {name:'专家课程',times:8,cost:100,exp:100,duration:'35分钟',icon:'📕',credit:5,tier:3}
+  {name:'基础课程',times:3,cost:0,exp:20,duration:'20分钟',credit:1,tier:0},
+  {name:'进阶课程',times:5,cost:100,exp:40,duration:'25分钟',credit:2,tier:1},
+  {name:'高级课程',times:10,cost:150,exp:70,duration:'30分钟',credit:3,tier:2},
+  {name:'专家课程',times:20,cost:200,exp:100,duration:'35分钟',credit:5,tier:3}
 ];
 const TIER_COLORS=['t0','t1','t2','t3'];
 const TIER_NAMES=['初级','中级','高级','终极'];
-const ROUTES={culture:[{id:'writing',icon:'✍️',name:'写作线',path:'见习诗人→撰稿人→小说家→文豪',desc:'收入均衡',jobs:['见习诗人','撰稿人','小说家','文豪']},{id:'language',icon:'🌐',name:'语言线',path:'见习翻译→翻译官→同声传译→语言大师',desc:'稳定增长',jobs:['见习翻译','翻译官','同声传译','语言大师']},{id:'media',icon:'📱',name:'传媒线',path:'见习vloger→主播→导演→传媒巨匠',desc:'上限高',jobs:['见习vloger','主播','导演','传媒巨匠']}],science:[{id:'tech',icon:'💻',name:'技术线',path:'见习程序员→程序员→架构师→技术之神',desc:'稳定',jobs:['见习程序员','程序员','架构师','技术之神']},{id:'research',icon:'🧪',name:'研究线',path:'见习实验员→化学师→研究员→科学巨擘',desc:'均衡',jobs:['见习实验员','化学师','研究员','科学巨擘']},{id:'engineering',icon:'🔧',name:'工程线',path:'见习修理工→工程师→建筑师→工程大师',desc:'爆发',jobs:['见习修理工','工程师','建筑师','工程大师']}],art:[{id:'painting',icon:'🖌️',name:'美术线',path:'见习画手→画师→艺术总监→画圣',desc:'均衡',jobs:['见习画手','画师','艺术总监','画圣']},{id:'music',icon:'🎵',name:'音乐线',path:'见习乐手→作曲家→音乐制作人→乐神',desc:'爆发',jobs:['见习乐手','作曲家','音乐制作人','乐神']},{id:'dance',icon:'💃',name:'舞蹈线',path:'见习舞者→编舞→舞团团长→舞王',desc:'稳定',jobs:['见习舞者','编舞','舞团团长','舞王']}],sports:[{id:'compete',icon:'🏃',name:'竞技线',path:'见习运动员→职业选手→冠军→体育传奇',desc:'爆发',jobs:['见习运动员','职业选手','冠军选手','体育传奇']},{id:'train',icon:'🏋️',name:'训练线',path:'见习教练→健身教练→运动经理→金牌教练',desc:'稳定',jobs:['见习教练','健身教练','运动经理','金牌教练']},{id:'cast',icon:'🎙️',name:'解说线',path:'见习解说→体育解说→评论家→名嘴',desc:'均衡',jobs:['见习解说','体育解说','体育评论家','名嘴']}]};
-const ADVENTURE_MAPS=[{name:'小镇公园',icon:'🏕️',cost:30,desc:'轻松散步，遇到新朋友',difficulty:'简单'},{name:'神秘森林',icon:'🌲',cost:50,desc:'深入探索，稀有物品',difficulty:'普通'},{name:'雪山之巅',icon:'🏔️',cost:80,desc:'极限挑战，高风险高回报',difficulty:'困难'},{name:'海底世界',icon:'🐠',cost:100,desc:'未知领域，发现宝藏',difficulty:'困难',locked:true}];
+
+// === 职业解锁表（基于学习组合） ===
+const JOBS=[
+  // 初级
+  {id:'waiter',name:'服务员',icon:'🍽️',pay:100,duration:40,tier:0,require:null,desc:'无需学历',skills:['job_coffee','job_serve']},
+  {id:'courier',name:'快递员',icon:'📦',pay:120,duration:40,tier:0,require:null,desc:'无需学历',skills:['job_navigate','job_stamina']},
+  {id:'cleaner',name:'保洁员',icon:'🧹',pay:100,duration:40,tier:0,require:null,desc:'无需学历',skills:['job_organize','job_clean']},
+  // 中级
+  {id:'news_editor',name:'新闻编辑',icon:'📰',pay:250,duration:45,tier:1,require:{culture:1},desc:'文化进阶',skills:['job_writing','job_research']},
+  {id:'tutor',name:'家庭教师',icon:'👩‍🏫',pay:300,duration:45,tier:1,require:{culture:1,science:1},desc:'文化进阶+科学进阶',skills:['job_explain','job_quiz']},
+  {id:'streamer',name:'主播',icon:'🎤',pay:280,duration:45,tier:1,require:{art:1},desc:'艺术进阶',skills:['job_joke','job_host']},
+  {id:'trainer',name:'健身教练',icon:'🏋️',pay:250,duration:45,tier:1,require:{sports:1},desc:'体育进阶',skills:['job_stretch','job_nutrition']},
+  {id:'lab_assist',name:'实验助理',icon:'🧪',pay:260,duration:45,tier:1,require:{science:1},desc:'科学进阶',skills:['job_experiment','job_data']},
+  // 高级
+  {id:'programmer',name:'程序员',icon:'💻',pay:500,duration:50,tier:2,require:{science:2},desc:'科学高级',skills:['job_debug','job_logic']},
+  {id:'designer',name:'设计师',icon:'🎨',pay:450,duration:50,tier:2,require:{art:2},desc:'艺术高级',skills:['job_color','job_illustrate']},
+  {id:'doctor',name:'医生',icon:'🏥',pay:600,duration:55,tier:2,require:{science:2,sports:1},desc:'科学高级+体育进阶',skills:['job_firstaid','job_health']},
+  {id:'writer',name:'作家',icon:'📚',pay:450,duration:50,tier:2,require:{culture:2},desc:'文化高级',skills:['job_storytell','job_copywrite']},
+  {id:'athlete',name:'运动员',icon:'⚽',pay:500,duration:50,tier:2,require:{sports:2},desc:'体育高级',skills:['job_commentary','job_teamwork']},
+  {id:'chef',name:'大厨',icon:'🍳',pay:400,duration:50,tier:2,require:{culture:1,art:1},desc:'文化进阶+艺术进阶',skills:['job_cook','job_taste']},
+  // 终极
+  {id:'director',name:'导演',icon:'🎬',pay:800,duration:55,tier:3,require:{art:2,culture:2},desc:'艺术高级+文化高级',skills:['job_camera','job_storytell_adv']},
+  {id:'scientist',name:'科学家',icon:'🔬',pay:900,duration:55,tier:3,require:{science:3},desc:'科学专家',skills:['job_research_adv','job_paper']},
+  {id:'musician',name:'音乐人',icon:'🎵',pay:800,duration:55,tier:3,require:{art:3},desc:'艺术专家',skills:['job_compose','job_instrument']},
+  {id:'ceo',name:'CEO',icon:'👔',pay:1000,duration:60,tier:3,require:{culture:2,science:2,art:1},desc:'文化高级+科学高级+艺术进阶',skills:['job_speech','job_decision']},
+  {id:'legend',name:'全能传奇',icon:'🌟',pay:1500,duration:60,tier:3,require:{culture:3,science:3,art:3,sports:3},desc:'全科专家',skills:['job_crossover','job_encyclopedia']}
+];
+
+// === Skill 池 ===
+const SKILL_POOL=[
+  // 学科类（学习产出）
+  {id:'culture_poem',name:'唐诗300首',icon:'📜',category:'学科',rarity:'普通',source:'culture',dialogDisplay:'吟诵一首唐诗'},
+  {id:'culture_idiom',name:'成语接龙',icon:'🀄',category:'学科',rarity:'普通',source:'culture',dialogDisplay:'和主人玩成语接龙'},
+  {id:'culture_story',name:'讲故事',icon:'📖',category:'学科',rarity:'稀有',source:'culture',dialogDisplay:'讲一个小故事'},
+  {id:'culture_calligraphy',name:'书法入门',icon:'🖊️',category:'学科',rarity:'普通',source:'culture',dialogDisplay:'写一个毛笔字'},
+  {id:'science_math',name:'四则运算',icon:'🧮',category:'学科',rarity:'普通',source:'science',dialogDisplay:'帮主人算账'},
+  {id:'science_element',name:'元素周期表',icon:'⚗️',category:'学科',rarity:'普通',source:'science',dialogDisplay:'科普化学元素'},
+  {id:'science_coding',name:'编程入门',icon:'💻',category:'学科',rarity:'稀有',source:'science',dialogDisplay:'写一行代码'},
+  {id:'science_weather',name:'天气预报',icon:'🌤️',category:'学科',rarity:'普通',source:'science',dialogDisplay:'播报今天天气'},
+  {id:'art_sing',name:'即兴哼歌',icon:'🎵',category:'学科',rarity:'普通',source:'art',dialogDisplay:'哼一段旋律'},
+  {id:'art_draw',name:'简笔画',icon:'✏️',category:'学科',rarity:'普通',source:'art',dialogDisplay:'画一幅简笔画'},
+  {id:'art_color',name:'配色知识',icon:'🎨',category:'学科',rarity:'普通',source:'art',dialogDisplay:'评价配色搭配'},
+  {id:'sports_stretch',name:'拉伸运动',icon:'🤸',category:'学科',rarity:'普通',source:'sports',dialogDisplay:'提醒主人拉伸'},
+  {id:'sports_swim',name:'游泳',icon:'🏊',category:'学科',rarity:'普通',source:'sports',dialogDisplay:'分享游泳技巧'},
+  {id:'sports_yoga',name:'瑜伽入门',icon:'🧘',category:'学科',rarity:'稀有',source:'sports',dialogDisplay:'推荐瑜伽动作'},
+  // 职业类（打工产出）
+  {id:'job_coffee',name:'做咖啡',icon:'☕',category:'职业',rarity:'普通',source:'work',dialogDisplay:'泡一杯咖啡'},
+  {id:'job_serve',name:'端盘子',icon:'🍽️',category:'职业',rarity:'普通',source:'work',dialogDisplay:'端东西稳稳当当'},
+  {id:'job_navigate',name:'认路导航',icon:'🧭',category:'职业',rarity:'普通',source:'work',dialogDisplay:'帮主人找路'},
+  {id:'job_stamina',name:'体力充沛',icon:'💪',category:'职业',rarity:'普通',source:'work',dialogDisplay:'精力满满不怕累'},
+  {id:'job_organize',name:'整理收纳',icon:'📦',category:'职业',rarity:'普通',source:'work',dialogDisplay:'帮主人整理东西'},
+  {id:'job_clean',name:'去污妙招',icon:'✨',category:'职业',rarity:'普通',source:'work',dialogDisplay:'分享清洁小窍门'},
+  {id:'job_writing',name:'写作技巧',icon:'✍️',category:'职业',rarity:'普通',source:'work',dialogDisplay:'帮主人润色文案'},
+  {id:'job_research',name:'信息搜集',icon:'🔍',category:'职业',rarity:'普通',source:'work',dialogDisplay:'快速找到关键信息'},
+  {id:'job_explain',name:'讲解能力',icon:'👩‍🏫',category:'职业',rarity:'普通',source:'work',dialogDisplay:'用简单的话解释复杂事'},
+  {id:'job_quiz',name:'出题技巧',icon:'❓',category:'职业',rarity:'普通',source:'work',dialogDisplay:'出一道趣味小测验'},
+  {id:'job_joke',name:'讲笑话',icon:'😂',category:'职业',rarity:'稀有',source:'work',dialogDisplay:'讲一个冷笑话'},
+  {id:'job_host',name:'控场能力',icon:'🎤',category:'职业',rarity:'普通',source:'work',dialogDisplay:'活跃气氛暖场'},
+  {id:'job_stretch',name:'拉伸指导',icon:'🧘',category:'职业',rarity:'普通',source:'work',dialogDisplay:'指导正确拉伸姿势'},
+  {id:'job_nutrition',name:'营养建议',icon:'🥗',category:'职业',rarity:'普通',source:'work',dialogDisplay:'推荐健康饮食'},
+  {id:'job_experiment',name:'实验操作',icon:'🧪',category:'职业',rarity:'普通',source:'work',dialogDisplay:'做一个小实验'},
+  {id:'job_data',name:'数据记录',icon:'📊',category:'职业',rarity:'普通',source:'work',dialogDisplay:'帮主人记录数据'},
+  {id:'job_debug',name:'编程debug',icon:'🐛',category:'职业',rarity:'稀有',source:'work',dialogDisplay:'找bug修bug'},
+  {id:'job_logic',name:'逻辑推理',icon:'🧩',category:'职业',rarity:'普通',source:'work',dialogDisplay:'帮主人理清思路'},
+  {id:'job_color',name:'配色审美',icon:'🌈',category:'职业',rarity:'普通',source:'work',dialogDisplay:'推荐配色方案'},
+  {id:'job_illustrate',name:'画插画',icon:'🖌️',category:'职业',rarity:'稀有',source:'work',dialogDisplay:'画一幅小插画'},
+  {id:'job_firstaid',name:'急救知识',icon:'🩹',category:'职业',rarity:'稀有',source:'work',dialogDisplay:'分享急救常识'},
+  {id:'job_health',name:'健康建议',icon:'💊',category:'职业',rarity:'普通',source:'work',dialogDisplay:'提醒健康习惯'},
+  {id:'job_storytell',name:'讲故事',icon:'📚',category:'职业',rarity:'普通',source:'work',dialogDisplay:'讲一个生动的故事'},
+  {id:'job_copywrite',name:'文案创作',icon:'📝',category:'职业',rarity:'普通',source:'work',dialogDisplay:'帮主人写文案'},
+  {id:'job_commentary',name:'赛事解说',icon:'📣',category:'职业',rarity:'普通',source:'work',dialogDisplay:'激情解说比赛'},
+  {id:'job_teamwork',name:'团队配合',icon:'🤝',category:'职业',rarity:'普通',source:'work',dialogDisplay:'协调团队合作'},
+  {id:'job_cook',name:'做饭',icon:'🍳',category:'职业',rarity:'普通',source:'work',dialogDisplay:'推荐今日菜谱'},
+  {id:'job_taste',name:'美食鉴赏',icon:'👅',category:'职业',rarity:'普通',source:'work',dialogDisplay:'点评美食口味'},
+  {id:'job_camera',name:'镜头语言',icon:'🎥',category:'职业',rarity:'稀有',source:'work',dialogDisplay:'用画面讲故事'},
+  {id:'job_storytell_adv',name:'高级叙事',icon:'🎭',category:'职业',rarity:'稀有',source:'work',dialogDisplay:'编排精彩剧情'},
+  {id:'job_research_adv',name:'科研方法',icon:'🔬',category:'职业',rarity:'稀有',source:'work',dialogDisplay:'设计实验方案'},
+  {id:'job_paper',name:'论文写作',icon:'📄',category:'职业',rarity:'稀有',source:'work',dialogDisplay:'写一篇小论文'},
+  {id:'job_compose',name:'即兴作曲',icon:'🎼',category:'职业',rarity:'稀有',source:'work',dialogDisplay:'现场编一段旋律'},
+  {id:'job_instrument',name:'乐器演奏',icon:'🎹',category:'职业',rarity:'稀有',source:'work',dialogDisplay:'弹奏一首曲子'},
+  {id:'job_speech',name:'演讲术',icon:'🎙️',category:'职业',rarity:'稀有',source:'work',dialogDisplay:'帮主人理清演讲思路'},
+  {id:'job_decision',name:'决策力',icon:'⚖️',category:'职业',rarity:'稀有',source:'work',dialogDisplay:'分析利弊帮主人做决定'},
+  {id:'job_crossover',name:'跨界思维',icon:'🌐',category:'职业',rarity:'稀有',source:'work',dialogDisplay:'用跨领域视角看问题'},
+  {id:'job_encyclopedia',name:'全能百科',icon:'📒',category:'职业',rarity:'稀有',source:'work',dialogDisplay:'什么都能聊两句'},
+  // 见闻类（冒险偷师）
+  {id:'exp_flower',name:'认识花草',icon:'🌺',category:'见闻',rarity:'普通',source:'adventure',dialogDisplay:'科普植物知识'},
+  {id:'exp_mushroom',name:'辨别蘑菇',icon:'🍄',category:'见闻',rarity:'普通',source:'adventure',dialogDisplay:'辨别蘑菇种类'},
+  {id:'exp_star',name:'看星星',icon:'⭐',category:'见闻',rarity:'普通',source:'adventure',dialogDisplay:'讲星座故事'},
+  {id:'exp_dive',name:'潜水知识',icon:'🤿',category:'见闻',rarity:'稀有',source:'adventure',dialogDisplay:'分享海洋冷知识'},
+  {id:'creative_fortune',name:'今日运势',icon:'🔮',category:'创意',rarity:'普通',source:'adventure',dialogDisplay:'播报今日运势'}
+];
+
+const ADVENTURE_MAPS=[{name:'小镇公园',icon:'🏕️',cost:200,desc:'轻松散步，遇到新朋友',difficulty:'简单'},{name:'神秘森林',icon:'🌲',cost:350,desc:'深入探索，稀有物品',difficulty:'普通'},{name:'雪山之巅',icon:'🏔️',cost:500,desc:'极限挑战，高风险高回报',difficulty:'困难'},{name:'海底世界',icon:'🐠',cost:800,desc:'未知领域，发现宝藏',difficulty:'困难',locked:true}];
+
+const SPECIALTIES=[
+  {mapIdx:0,name:'小镇公园',items:[
+    {id:'park_flower',icon:'🌸',name:'樱花瓣',desc:'公园散步时飘落的粉色花瓣',howToGet:'在小镇公园冒险时随机获得'},
+    {id:'park_leaf',icon:'🍀',name:'四叶草',desc:'罕见的幸运草',howToGet:'在小镇公园冒险时随机获得'},
+    {id:'park_stone',icon:'🪨',name:'彩色鹅卵石',desc:'河边的彩色小石头',howToGet:'在小镇公园冒险时随机获得'},
+    {id:'park_feather',icon:'🪶',name:'孔雀羽毛',desc:'公园孔雀掉落的绚丽羽毛',howToGet:'在小镇公园冒险时随机获得'},
+    {id:'park_acorn',icon:'🌰',name:'金色橡果',desc:'公园大橡树下的果实',howToGet:'在小镇公园冒险时随机获得'},
+    {id:'park_butterfly',icon:'🦋',name:'蝴蝶标本',desc:'翩翩起舞的蝴蝶',howToGet:'在小镇公园冒险3次以上随机获得'}
+  ]},
+  {mapIdx:1,name:'神秘森林',items:[
+    {id:'forest_mushroom',icon:'🍄',name:'荧光蘑菇',desc:'深夜发光的神秘蘑菇',howToGet:'在神秘森林冒险时随机获得'},
+    {id:'forest_crystal',icon:'💎',name:'森林水晶',desc:'古树根部的天然水晶',howToGet:'在神秘森林冒险时随机获得'},
+    {id:'forest_berry',icon:'🫐',name:'魔法浆果',desc:'据说吃了能看到精灵',howToGet:'在神秘森林冒险时随机获得'},
+    {id:'forest_moss',icon:'🌿',name:'千年苔藓',desc:'巨石上的古老苔藓',howToGet:'在神秘森林冒险时随机获得'},
+    {id:'forest_amber',icon:'🟠',name:'琥珀原石',desc:'封存远古昆虫的琥珀',howToGet:'在神秘森林冒险2次以上随机获得'},
+    {id:'forest_owl',icon:'🦉',name:'猫头鹰挂件',desc:'森林守护者的信物',howToGet:'在神秘森林冒险5次以上随机获得'}
+  ]},
+  {mapIdx:2,name:'雪山之巅',items:[
+    {id:'snow_crystal',icon:'❄️',name:'永冻雪花',desc:'永不融化的神奇雪花',howToGet:'在雪山之巅冒险时随机获得'},
+    {id:'snow_ore',icon:'⚪',name:'银矿石',desc:'雪山深处的珍贵矿石',howToGet:'在雪山之巅冒险时随机获得'},
+    {id:'snow_herb',icon:'🌱',name:'雪莲花',desc:'极高处绽放的珍稀花朵',howToGet:'在雪山之巅冒险时随机获得'},
+    {id:'snow_fossil',icon:'🦴',name:'冰封化石',desc:'冰层中的远古生物化石',howToGet:'在雪山之巅冒险3次以上随机获得'},
+    {id:'snow_flag',icon:'🚩',name:'登顶旗帜',desc:'成功登顶的纪念旗帜',howToGet:'在雪山之巅冒险5次以上随机获得'},
+    {id:'snow_yeti',icon:'🐻‍❄️',name:'雪人毛发',desc:'传说中雪山怪物的痕迹',howToGet:'在雪山之巅冒险8次以上低概率获得'}
+  ]},
+  {mapIdx:3,name:'海底世界',items:[
+    {id:'sea_pearl',icon:'🫧',name:'深海珍珠',desc:'海底贝壳中的晶莹珍珠',howToGet:'在海底世界冒险时随机获得'},
+    {id:'sea_coral',icon:'🪸',name:'彩色珊瑚',desc:'海底花园的缤纷珊瑚',howToGet:'在海底世界冒险时随机获得'},
+    {id:'sea_shell',icon:'🐚',name:'海螺号角',desc:'传说能召唤海豚的号角',howToGet:'在海底世界冒险时随机获得'},
+    {id:'sea_star',icon:'⭐',name:'海星挂饰',desc:'五角形的深海之星',howToGet:'在海底世界冒险3次以上随机获得'},
+    {id:'sea_trident',icon:'🔱',name:'三叉戟碎片',desc:'海神遗物的碎片',howToGet:'在海底世界冒险5次以上随机获得'},
+    {id:'sea_treasure',icon:'🗝️',name:'宝藏钥匙',desc:'打开海底宝藏的神秘钥匙',howToGet:'在海底世界冒险10次以上低概率获得'}
+  ]}
+];
+const ATLAS_REWARDS=['🎁 奖励100金币 + 解锁「神秘森林」','🎁 奖励200金币 + 解锁「雪山之巅」','🎁 奖励500金币 + 解锁「海底世界」','🎁 奖励1000金币 + 「探险大师」称号'];
+
+const FRIENDS=[
+  {name:'豆豆',emoji:'🐩',color:'#ffe0e0',owner:'小明',status:'空闲',hiredToday:false},
+  {name:'球球',emoji:'🐱',color:'#e0f0ff',owner:'阿杰',status:'空闲',hiredToday:false},
+  {name:'旺财',emoji:'🐶',color:'#fff0d0',owner:'小红',status:'被带走中',hiredToday:true},
+  {name:'咪咪',emoji:'🐈',color:'#e8ffe0',owner:'大伟',status:'空闲',hiredToday:false},
+  {name:'小白',emoji:'🐰',color:'#f0e8ff',owner:'莉莉',status:'空闲',hiredToday:false}
+];
+
+const SELF_COMMENTS=['今天学得很开心，虽然有点累但收获满满！','这门课好有意思，下次还想上～','笔记记了满满两页，感觉自己变聪明了！','老师讲得太好了，我要继续努力！','虽然有些难，但我没有放弃哦！'];
+const TEACHER_COMMENTS=['小灰同学上课认真听讲，积极回答问题，继续保持！','这位同学进步很大，能看出平时有在用功。','小灰的理解力很强，但偶尔会走神。整体表现不错！','学习态度端正，与同学相处融洽。期待更好表现！'];
+const ADVENTURE_GREETINGS=['亲爱的主人，今天在{place}看到了好多有趣的事情！','主人你好！{place}真的太好玩了！我交到了一个新朋友～','寄自{place}的问候～今天天气很好，心情超级棒！','主人！我在{place}发现了一个秘密基地！','从{place}寄回的明信片～这里的风景美极了！'];
+const STEAL_TEXTS=['小灰在{place}偷偷观察了一只正在{action}的宠物...回来后竟然学会了！','小灰在{place}看到别的宠物在{action}，默默看了好久，突然灵光一闪！','路过{place}时，小灰发现一只宠物在展示{action}，偷偷记下了要领！'];
+const STEAL_ACTIONS=['弹吉他','做数学题','画画','跳舞','背诗','做瑜伽','讲笑话','煮咖啡','看星星','认花草'];
+
+// === 对讲消息池 ===
+const CHAT_MSGS={
+  study:{
+    start:['到教室了！今天学{detail}，加油💪','主人我到学校了～准备上课！','坐到位子上了，老师马上来了！'],
+    mid:['老师在讲好有趣的内容！我认真记笔记中...','刚才举手回答了一个问题，老师表扬我了！','这道题有点难...但我不会放弃的！','和同桌讨论了一下，好像懂了！'],
+    end:['快下课了！今天学了好多新东西～','笔记记了满满一页！等下回家给你看','收拾书包中...马上回家！']
+  },
+  work:{
+    start:['到工位了！今天做{detail}，开始干活～','主人我开始打工啦，会努力赚钱的！','换好工作服了，准备开工！'],
+    mid:['工作进行中...老板说我做得不错！','偷偷数了一下，已经赚了一些金币了','有点累但很充实，继续加油！','和同事配合得很好，效率提升了！'],
+    end:['快下班了！今天收获满满～','把赚的金币装好，马上回家！','工作完成！迫不及待想回去了']
+  },
+  adventure:{
+    start:['出发啦！今天去{detail}探险～','好兴奋！{detail}我来了！','背上小书包，冒险开始！'],
+    mid:['这里风景好美...想给主人拍照','好像看到一只宠物在做什么，偷偷观察一下...','发现了一个有趣的东西！等我回去再告诉你','路上遇到了一只小动物，好可爱！'],
+    end:['该回去了，给主人带了礼物哦！','冒险快结束了，收获不少！','往回走了～今天真开心']
+  }
+};
+const CHAT_REPLIES_OUTING=['在外面呢！等我回去再聊～','现在有点忙...不过看到主人消息好开心！','我在认真{doing}中！等下回家说～','收到！主人等我，马上就好了！','嘿嘿，想我了吗？再等一小会就回来！'];
+const CHAT_REPLIES_HOME=['主人好！今天想干什么呀？','我在家呢～有什么事吗？','主人找我有事吗？随时待命！','嗯嗯，我在听！','主人～想和你聊天！'];
+const CHAT_DOING={study:'上课',work:'工作',adventure:'冒险'};
 
 // === 基础函数 ===
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0)}
@@ -338,377 +729,516 @@ function showToast(msg){const t=document.getElementById('toast');t.textContent=m
 function petTap(){showToast('小灰围着你转了一圈～')}
 function goHome(){showScreen('screen-home')}
 function goMap(){if(state.outingTimer){showToast('小灰还在外面没回来哦～');return}updateMapLocks();showScreen('screen-map')}
+let guideReturnScreen='screen-map';
+function goGuideAnchor(anchorId,fromScreen){guideReturnScreen=fromScreen||'screen-map';closeActionSheet();showScreen('screen-guide');setTimeout(()=>{const el=document.getElementById(anchorId);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},100)}
+function guideBack(){showScreen(guideReturnScreen)}
 function showActionSheet(html){document.getElementById('action-sheet-content').innerHTML=html;document.getElementById('action-sheet').classList.add('show')}
 function closeActionSheet(){document.getElementById('action-sheet').classList.remove('show')}
 
-// === 出门倒计时系统 (不阻断主页操作) ===
-function handleOutingClick(){
-  if(state.outingTimer){
-    showToast('小灰还没回家哦，请耐心等待～');
-    return;
-  }
-  goMap();
+// === 出门倒计时 ===
+function handleOutingClick(){if(state.outingTimer){showToast('小灰还没回家哦，请耐心等待～');return}goMap()}
+function startOuting(text,duration,callback,outType,outDetail){
+  closeActionSheet();showScreen('screen-home');
+  state.outingEnd=Date.now()+duration;state.outingCallback=callback;
+  state.outingType=outType||'adventure';state.outingDetail=outDetail||'';
+  // 设置对讲状态
+  updateChatStatus();
+  // 推送第一条出门消息 + 气泡
+  const msg1=getOutingMsg('start');addPetMsg(msg1);showThoughtBubble(msg1);
+  // 定时推送过程消息 + 气泡
+  state.outingMsgTimer=setTimeout(()=>{const msg=getOutingMsg('mid');addPetMsg(msg);showThoughtBubble(msg)},duration*0.4);
+  state.outingMsgTimer2=setTimeout(()=>{const msg=getOutingMsg('end');addPetMsg(msg);showThoughtBubble(msg)},duration*0.8);
+  const cdEl=document.getElementById('dock-countdown');cdEl.classList.remove('hidden');
+  function tick(){const remain=state.outingEnd-Date.now();if(remain<=0){cdEl.classList.add('hidden');state.outingTimer=null;state.outingCallback=null;state.outingType=null;updateChatStatus();hideThoughtBubble();callback();return}const s=Math.ceil(remain/1000);cdEl.textContent=(s>=60?Math.floor(s/60)+'分'+('0'+(s%60)).slice(-2)+'秒':s+'秒');state.outingTimer=requestAnimationFrame(tick)}tick();showToast(text)
 }
-function startOuting(text, duration, callback){
-  closeActionSheet();
-  showScreen('screen-home');
-  state.outingEnd=Date.now()+duration;
-  state.outingCallback=callback;
-  const cdEl=document.getElementById('dock-countdown');
-  cdEl.classList.remove('hidden');
-  function tick(){
-    const remain=state.outingEnd-Date.now();
-    if(remain<=0){
-      cdEl.classList.add('hidden');
-      state.outingTimer=null;
-      state.outingCallback=null;
-      callback();
-      return;
+
+// === 想法气泡（首页企鹅头顶） ===
+function showThoughtBubble(text){
+  const el=document.getElementById('thought-bubble');
+  el.textContent=text;el.classList.add('show');
+  // 5秒后自动隐藏
+  if(state.bubbleTimer)clearTimeout(state.bubbleTimer);
+  state.bubbleTimer=setTimeout(()=>{el.classList.remove('show')},5000);
+}
+function hideThoughtBubble(){
+  const el=document.getElementById('thought-bubble');el.classList.remove('show');
+  if(state.bubbleTimer){clearTimeout(state.bubbleTimer);state.bubbleTimer=null}
+}
+
+// === 对讲系统 ===
+function goChat(){showScreen('screen-chat');updateChatStatus();scrollChat()}
+function updateChatStatus(){
+  const el=document.getElementById('chat-status');const txt=document.getElementById('chat-status-text');
+  if(state.outingType){
+    el.classList.remove('hidden');
+    const labels={study:'📚 小灰正在学习'+state.outingDetail+'...',work:'💼 小灰正在打工('+state.outingDetail+')...',adventure:'🏔️ 小灰在'+state.outingDetail+'冒险中...'};
+    txt.textContent=labels[state.outingType]||'小灰在外面...';
+  } else {
+    el.classList.add('hidden');
+  }
+}
+function getOutingMsg(phase){
+  const type=state.outingType||'adventure';
+  const pool=CHAT_MSGS[type]?.[phase]||['小灰在外面...'];
+  let msg=pool[Math.floor(Math.random()*pool.length)];
+  msg=msg.replace('{detail}',state.outingDetail||'某处');
+  return msg;
+}
+function addPetMsg(text){
+  const container=document.getElementById('chat-messages');
+  const now=new Date();const timeStr=('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2);
+  const div=document.createElement('div');div.className='chat-msg pet';
+  div.innerHTML=text+'<span class="msg-time">'+timeStr+'</span>';
+  container.appendChild(div);scrollChat();
+}
+function addUserMsg(text){
+  const container=document.getElementById('chat-messages');
+  const now=new Date();const timeStr=('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2);
+  const div=document.createElement('div');div.className='chat-msg user';
+  div.innerHTML=text+'<span class="msg-time">'+timeStr+'</span>';
+  container.appendChild(div);scrollChat();
+}
+function sendChat(){
+  const input=document.getElementById('chat-input');
+  const text=input.value.trim();if(!text)return;
+  addUserMsg(text);input.value='';
+  // 宠物延迟回复
+  setTimeout(()=>{
+    let reply;
+    if(state.outingType){
+      reply=CHAT_REPLIES_OUTING[Math.floor(Math.random()*CHAT_REPLIES_OUTING.length)];
+      reply=reply.replace('{doing}',CHAT_DOING[state.outingType]||'忙');
+    } else {
+      reply=CHAT_REPLIES_HOME[Math.floor(Math.random()*CHAT_REPLIES_HOME.length)];
+      // 如果有Skill，偶尔展示
+      const learnedSkills=Object.keys(state.skills);
+      if(learnedSkills.length&&Math.random()<0.3){
+        const sid=learnedSkills[Math.floor(Math.random()*learnedSkills.length)];
+        const sk=SKILL_POOL.find(s=>s.id===sid);
+        if(sk) reply+=' 对了，我最近学了'+sk.name+'，要不要看我'+sk.dialogDisplay+'？';
+      }
     }
-    const s=Math.ceil(remain/1000);
-    cdEl.textContent=(s>=60?Math.floor(s/60)+'分'+('0'+(s%60)).slice(-2)+'秒':s+'秒');
-    state.outingTimer=requestAnimationFrame(tick);
-  }
-  tick();
-  showToast(text);
+    addPetMsg(reply);
+  },800+Math.random()*600);
 }
+function scrollChat(){const el=document.getElementById('chat-messages');setTimeout(()=>{el.scrollTop=el.scrollHeight},50)}
+
+// 初始化对讲 - 预设几条历史消息
+(function initChat(){
+  const msgs=['主人早！今天想干什么呀？','我昨天学了四则运算，感觉自己变聪明了！','想出门玩的话随时叫我～'];
+  const container=document.getElementById('chat-messages');
+  msgs.forEach((m,i)=>{
+    const div=document.createElement('div');div.className='chat-msg pet';
+    div.innerHTML=m+'<span class="msg-time">09:0'+i+'</span>';
+    container.appendChild(div);
+  });
+})();
+
+// === Skill 系统 ===
+function tryLearnSkill(source, subjectKey){
+  let pool;
+  if(source==='adventure'){
+    pool=SKILL_POOL; // 偷师可学任何
+  } else if(source==='work'&&state.currentJob&&state.currentJob.skills){
+    // 打工时从当前职业关联的Skill中选
+    pool=SKILL_POOL.filter(s=>state.currentJob.skills.includes(s.id));
+    if(!pool.length) pool=SKILL_POOL.filter(s=>s.source==='work');
+  } else if(subjectKey){
+    pool=SKILL_POOL.filter(s=>s.source===subjectKey);
+  } else {
+    pool=SKILL_POOL.filter(s=>s.source===source);
+  }
+  if(!pool.length) return null;
+  const skill=pool[Math.floor(Math.random()*pool.length)];
+  if(state.skills[skill.id]){
+    state.skills[skill.id].count++;
+    const c=state.skills[skill.id].count;
+    if(c>=8) state.skills[skill.id].level=3;
+    else if(c>=3) state.skills[skill.id].level=2;
+    return {skill, isNew:false, level:state.skills[skill.id].level};
+  } else {
+    const now=new Date();
+    state.skills[skill.id]={level:1,count:1,acquiredAt:(now.getMonth()+1)+'/'+now.getDate()+' '+now.getHours()+':'+('0'+now.getMinutes()).slice(-2)};
+    return {skill, isNew:true, level:1};
+  }
+}
+
+function renderSkillBanner(skillResult, isSteal){
+  if(!skillResult) return '';
+  const s=skillResult.skill;
+  const lvText=['','Lv1 入门','Lv2 熟练','Lv3 精通'][skillResult.level];
+  const stealNote=isSteal?'<div style="font-size:11px;color:#558b2f;margin-top:4px;font-style:italic">'+STEAL_TEXTS[Math.floor(Math.random()*STEAL_TEXTS.length)].replace('{place}','冒险途中').replace('{action}',STEAL_ACTIONS[Math.floor(Math.random()*STEAL_ACTIONS.length)])+'</div>':'';
+  return `<div class="skill-banner"><div class="sb-icon">${s.icon}</div><div><div class="sb-text">${skillResult.isNew?'🎓 新技能习得':'⬆️ 技能升级'}：${s.name} ${lvText}</div><div class="sb-sub">${s.dialogDisplay}${stealNote?'':' · '+s.category}</div>${stealNote}</div></div>`;
+}
+
+function goSkills(){showScreen('screen-skills');renderSkills()}
+function renderSkills(){
+  const learned=Object.keys(state.skills);
+  const total=SKILL_POOL.length;
+  let html=`<div style="padding:0 20px 16px"><div class="atlas-progress"><div class="prog-title"><span>已习得 ${learned.length}/${total}</span></div><div class="prog-bar"><div class="prog-fill" style="width:${Math.round(learned.length/total*100)}%"></div></div></div></div>`;
+  html+='<div class="atlas-grid">';
+  SKILL_POOL.forEach(skill=>{
+    const data=state.skills[skill.id];
+    if(data){
+      const lvText=['','Lv1','Lv2','Lv3'][data.level];
+      html+=`<div class="atlas-item collected"><div class="item-count">${lvText}</div><div class="item-icon">${skill.icon}</div><div class="item-name">${skill.name}</div><div class="item-info">${skill.category} · ${skill.rarity}<br>${skill.dialogDisplay}</div></div>`;
+    } else {
+      html+=`<div class="atlas-item uncollected"><div class="item-icon">${skill.icon}</div><div class="item-name">${skill.name}</div><div class="item-info">${skill.rarity} · ${skill.category}</div></div>`;
+    }
+  });
+  html+='</div>';
+  document.getElementById('skills-content').innerHTML=html;
+}
+
+// === 特产图鉴 ===
+function goAtlas(){showScreen('screen-atlas');renderAtlas()}
+function renderAtlas(){
+  const tabIdx=state.currentAtlasTab;
+  let tabsHtml='';
+  SPECIALTIES.forEach((map,i)=>{const unlocked=state.atlasMapUnlocked[i];const collected=map.items.filter(it=>state.atlas[it.id]).length;const cls=i===tabIdx?'atlas-tab active':(unlocked?'atlas-tab':'atlas-tab locked');tabsHtml+=`<button class="${cls}" onclick="${unlocked?'switchAtlasTab('+i+')':'showToast(\'收集完上一张地图后解锁\')'}">${ADVENTURE_MAPS[i].icon} ${map.name} ${unlocked?collected+'/'+map.items.length:'🔒'}</button>`});
+  document.getElementById('atlas-tabs').innerHTML=tabsHtml;
+  const mapData=SPECIALTIES[tabIdx];const unlocked=state.atlasMapUnlocked[tabIdx];
+  if(!unlocked){document.getElementById('atlas-progress').innerHTML='';document.getElementById('atlas-content').innerHTML=`<div class="atlas-unlock-banner"><div class="ub-icon">🔒</div><div class="ub-title">地图未解锁</div><div class="ub-desc">收集完上一张地图全部特产后解锁</div></div>`;return}
+  const collected=mapData.items.filter(it=>state.atlas[it.id]).length;const total=mapData.items.length;const pct=Math.round(collected/total*100);const allDone=collected===total;
+  document.getElementById('atlas-progress').innerHTML=`<div class="atlas-progress"><div class="prog-title"><span>${mapData.name} · ${collected}/${total}</span><span style="font-size:12px;color:${allDone?'#0bb76a':'#888'}">${allDone?'✅ 已完成':'收集中...'}</span></div><div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div><div class="prog-reward">${allDone?'🎉 奖励已领取！':ATLAS_REWARDS[tabIdx]}</div></div>`;
+  let gridHtml='<div class="atlas-grid">';
+  mapData.items.forEach(item=>{const data=state.atlas[item.id];if(data){gridHtml+=`<div class="atlas-item collected"><div class="item-count">×${data.count}</div><div class="item-icon">${item.icon}</div><div class="item-name">${item.name}</div><div class="item-info">首次:${data.firstTime}<br>已收集${data.count}个</div></div>`}else{gridHtml+=`<div class="atlas-item uncollected"><div class="item-icon">${item.icon}</div><div class="item-name">${item.name}</div><div class="item-info">${item.howToGet}</div></div>`}});
+  gridHtml+='</div>';document.getElementById('atlas-content').innerHTML=gridHtml;
+}
+function switchAtlasTab(idx){state.currentAtlasTab=idx;renderAtlas()}
+function collectSpecialty(mapIdx){const mapData=SPECIALTIES[mapIdx];if(!mapData||!state.atlasMapUnlocked[mapIdx])return null;const item=mapData.items[Math.floor(Math.random()*mapData.items.length)];if(state.atlas[item.id]){state.atlas[item.id].count++}else{const now=new Date();state.atlas[item.id]={count:1,firstTime:(now.getMonth()+1)+'/'+now.getDate()+' '+now.getHours()+':'+('0'+now.getMinutes()).slice(-2)}}const collected=mapData.items.filter(it=>state.atlas[it.id]).length;if(collected===mapData.items.length&&mapIdx<3&&!state.atlasMapUnlocked[mapIdx+1]){state.atlasMapUnlocked[mapIdx+1]=true;return{item,unlockNext:true,nextMap:SPECIALTIES[mapIdx+1].name}}return{item,unlockNext:false}}
 
 // === 地图锁 ===
-function updateMapLocks(){
-  const w=document.getElementById('building-work'),a=document.getElementById('building-adventure');
-  if(state.studyCount>=2){state.unlocked.work=true;w.classList.remove('locked')}
-  else{w.classList.add('locked')}
-  if(state.totalEarnings>=100){state.unlocked.adventure=true;a.classList.remove('locked')}
-  else{a.classList.add('locked')}
+function updateMapLocks(){const w=document.getElementById('building-work'),a=document.getElementById('building-adventure');if(state.studyCount>=2){state.unlocked.work=true;w.classList.remove('locked')}else{w.classList.add('locked')}if(state.totalEarnings>=500){state.unlocked.adventure=true;a.classList.remove('locked')}else{a.classList.add('locked')}}
+
+// === 出门历史系统 ===
+function addHistory(record){
+  state.historyId++;
+  const now=new Date();
+  record.id=state.historyId;
+  record.time=(now.getMonth()+1)+'/'+now.getDate()+' '+('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2);
+  state.history.unshift(record); // 最新的在前
+  if(state.history.length>50) state.history.pop(); // 最多保留50条
 }
 
-// === 结算弹窗 ===
-function showResultModal(type, data){
-  const modal=document.getElementById('result-modal');
-  const card=document.getElementById('result-card');
-  const typeLabels={study:'📝 成绩单',work:'💰 工资条',adventure:'🏔️ 明信片'};
-  const typeClass={study:'study',work:'work',adventure:'adventure'};
-  let unlockHtml=data.unlock?`<div class="card-unlock">🔓 ${data.unlock}</div>`:'';
-  card.innerHTML=`
-    <img class="card-img" src="result-sample.png" alt="">
-    <div class="card-body">
-      <span class="card-type ${typeClass[type]}">${typeLabels[type]}</span>
-      <div class="card-title">${data.title}</div>
-      <div class="card-sub">${data.sub}</div>
-      <div class="card-rewards">${data.rewards.map(r=>`<span class="sr">${r}</span>`).join('')}</div>
-      ${unlockHtml}
-      <div class="card-comment">${data.comment}</div>
-      <div class="card-actions">
-        <button class="accept" onclick="closeResultModal()">收下</button>
-        <button class="celebrate" onclick="showToast('小灰开心地转圈圈！')">庆祝</button>
+function goHistory(){showScreen('screen-history');renderHistory()}
+
+function renderHistory(){
+  const container=document.getElementById('history-list');
+  if(!state.history.length){container.innerHTML='<div class="history-empty">还没有出门记录哦～<br>快去出门看看吧！</div>';return}
+  let html='<div class="history-list">';
+  state.history.forEach(h=>{
+    const typeClass=h.type==='study'?'study':(h.type==='work'?'work':'adventure');
+    const tags=[];
+    if(h.skill) tags.push(`<span class="hc-tag skill">🎓 ${h.skill.name}</span>`);
+    if(h.specialty) tags.push(`<span class="hc-tag specialty">🎁 ${h.specialty.name}</span>`);
+    html+=`<div class="history-card" onclick="showHistoryDetail(${h.id})">
+      <div class="hc-icon ${typeClass}">${h.icon}</div>
+      <div class="hc-main">
+        <div class="hc-title">${h.title}</div>
+        <div class="hc-sub"><span>${h.duration}</span></div>
+        ${tags.length?'<div class="hc-rewards">'+tags.join('')+'</div>':''}
+      </div>
+      <div class="hc-time">${h.time}</div>
+    </div>`;
+  });
+  html+='</div>';
+  container.innerHTML=html;
+}
+
+function showHistoryDetail(id){
+  const h=state.history.find(x=>x.id===id);
+  if(!h)return;
+  showScreen('screen-history-detail');
+  const container=document.getElementById('history-detail-content');
+  // 根据类型构建过程内容
+  let processHtml='';
+  if(h.type==='study'){
+    processHtml=`
+      <div class="detail-section">
+        <div class="ds-label">🐧 宠物自评</div>
+        <div class="ds-content" style="font-style:italic;color:#2c5282">"${h.selfComment||''}"</div>
+      </div>
+      <div class="detail-section">
+        <div class="ds-label">👩‍🏫 老师评语</div>
+        <div class="ds-content">${h.teacherComment||''}</div>
+      </div>
+      ${h.unlock?`<div class="detail-section"><div class="ds-label">🔓 突破</div><div class="ds-content" style="color:#8a6b22;font-weight:700">${h.unlock}</div></div>`:''}`;
+  } else if(h.type==='work'){
+    processHtml=`
+      <div class="detail-section">
+        <div class="ds-label">📝 工作小结</div>
+        <div class="ds-content">${h.comment||''}</div>
+      </div>
+      ${h.friendName?`<div class="detail-section"><div class="ds-label">👥 结伴打工</div><div class="ds-content">带走了<strong>${h.friendOwner||'好友'}</strong>的<strong>${h.friendName}</strong>一起打工<br>你的收入 +50%，${h.friendName}自动获得 ${h.friendEarned||0}金</div></div>`:''}`;
+  } else {
+    processHtml=`
+      <div class="detail-section">
+        <div class="ds-label">💌 明信片</div>
+        <div class="ds-content" style="font-style:italic">"${h.greeting||''}"</div>
+      </div>
+      ${h.stealText?`<div class="detail-section"><div class="ds-label">👀 偷师记录</div><div class="ds-content" style="color:#2e7d32">${h.stealText}</div></div>`:''}`;
+  }
+  let html=`
+    <div class="detail-header">
+      <div class="dh-icon">${h.icon}</div>
+      <div class="dh-title">${h.title}</div>
+      <div class="dh-time">${h.time} · ${h.duration}</div>
+    </div>
+    ${processHtml}
+    <div class="detail-section">
+      <div class="ds-label">🎁 本次收获</div>
+      <div class="ds-tags">${h.rewards.map(r=>{
+        if(r.includes('金')) return `<span class="ds-tag coin">${r}</span>`;
+        if(r.includes('经验')||r.includes('学分')) return `<span class="ds-tag exp">${r}</span>`;
+        return `<span class="ds-tag coin">${r}</span>`;
+      }).join('')}
+      ${h.skill?`<span class="ds-tag skill">🎓 ${h.skill.icon} ${h.skill.name} Lv${h.skill.level}</span>`:''}
+      ${h.specialty?`<span class="ds-tag specialty">🎁 ${h.specialty.icon} ${h.specialty.name}</span>`:''}
       </div>
     </div>`;
-  modal.classList.add('show');
+  container.innerHTML=html;
 }
+
+
+// === 结算弹窗 ===
+function showResultModal(type,data){const modal=document.getElementById('result-modal');const card=document.getElementById('result-card');if(type==='study')renderStudyReport(card,data);else if(type==='work')renderPayslip(card,data);else renderPostcard(card,data);modal.classList.add('show')}
 function closeResultModal(){document.getElementById('result-modal').classList.remove('show')}
 
-// === 学习系统 ===
+function renderStudyReport(card,data){
+  const score=Math.floor(Math.random()*2)+4;const stars='★'.repeat(score)+'☆'.repeat(5-score);const scoreText=['','','','','优秀','卓越'][score];
+  const selfComment=data.selfComment||SELF_COMMENTS[Math.floor(Math.random()*SELF_COMMENTS.length)];
+  const teacherComment=data.teacherComment||TEACHER_COMMENTS[Math.floor(Math.random()*TEACHER_COMMENTS.length)];
+  const unlockHtml=data.unlock?`<div style="padding:10px 20px"><div style="background:#fff8dc;border-radius:12px;padding:10px 12px;color:#8a6b22;font-size:13px;font-weight:700">🔓 ${data.unlock}</div></div>`:'';
+  const skillHtml=data.skillBanner?`<div style="padding:0 20px 8px">${data.skillBanner}</div>`:'';
+  card.innerHTML=`<div class="report-card"><div class="report-header"><div class="report-school">宠物学院 · 成绩通知书</div><div class="report-title">📝 ${data.title}</div></div><div class="report-info"><div class="rk">姓名</div><div class="rv">小灰</div><div class="rk">课程</div><div class="rv">${data.sub}</div><div class="rk">学识</div><div class="rv">Lv.${getKnowledgeLvl(state.credits)} · 第${state.semester}学期</div><div class="rk">日期</div><div class="rv">${new Date().getMonth()+1}月${new Date().getDate()}日</div></div><div class="report-score"><div class="score-label">成绩评定</div><div class="score-stars">${stars}</div><div class="score-text">${scoreText} · 排名前${Math.floor(Math.random()*15)+5}%</div></div><div class="report-self"><div class="self-label">🐧 宠物自评</div><div class="self-text">"${selfComment}"</div></div><div class="report-teacher"><div class="teacher-label">👩‍🏫 老师评语</div><div class="teacher-text">${teacherComment}</div></div><div class="report-rewards">${data.rewards.map(r=>`<span class="rw">${r}</span>`).join('')}</div>${skillHtml}${unlockHtml}<div class="report-footer"><div class="result-actions"><button class="accept" onclick="closeResultModal()">收下成绩单</button><button class="celebrate" onclick="showToast('小灰开心地转圈圈！')">庆祝</button></div></div></div>`;
+}
+
+function renderPayslip(card,data){
+  const now=new Date();const dateStr=now.getFullYear()+'/'+('0'+(now.getMonth()+1)).slice(-2)+'/'+('0'+now.getDate()).slice(-2);
+  const job=state.currentJob||{name:'工作',pay:0,tier:0};const basePay=job.pay||0;
+  const friendBonus=data.friendName?Math.round(basePay*0.5):0;const eduBonus=getWorkBonus(state.credits);
+  const eduAmount=eduBonus>0?Math.round(basePay*(eduBonus/100)):0;const totalEarned=data.earned||basePay+friendBonus;
+  const friendEarned=data.friendEarned||0;
+  const skillHtml=data.skillBanner?`<div style="padding:0 20px 8px">${data.skillBanner}</div>`:'';
+  const friendSection=data.friendName?`<div style="padding:8px 20px;margin-top:4px"><div style="background:#fff8dc;border-radius:12px;padding:10px 12px;font-size:12px;color:#8a6b22;line-height:1.6"><strong>📢 结伴通知</strong><br>${data.friendOwner||'好友'}的${data.friendName}陪你打工，自动获得 <strong>${friendEarned}金</strong><br><span style="color:#999;font-size:11px">${data.friendName}被带走期间${data.friendOwner}无法出门</span></div></div>`:'';
+  card.innerHTML=`<div class="payslip"><div class="payslip-header"><div class="pay-icon">💰</div><div class="pay-title">工资条</div><div class="pay-date">${dateStr} · ${job.name}</div><div class="pay-stamp">已<br>发放</div></div><div class="payslip-body"><div class="payslip-row"><span class="pr-label">基础工资</span><span class="pr-value income">+${basePay} 🪙</span></div>${eduBonus>0?`<div class="payslip-row"><span class="pr-label">学识加成(Lv.${getKnowledgeLvl(state.credits)} +${eduBonus}%)</span><span class="pr-value income">+${eduAmount} 🪙</span></div>`:''}${friendBonus>0?`<div class="payslip-row"><span class="pr-label">结伴加成(${data.friendName} +50%)</span><span class="pr-value income">+${friendBonus} 🪙</span></div>`:''}<div class="payslip-row"><span class="pr-label">体力消耗</span><span class="pr-value expense">-10 ⚡</span></div></div><div class="payslip-total"><span class="pt-label">💵 实发总额</span><span class="pt-value">${totalEarned} 🪙</span></div>${friendSection}${skillHtml}<div class="payslip-note">${data.comment||''}</div><div class="payslip-footer"><div class="result-actions"><button class="accept" onclick="closeResultModal()">确认收款</button><button class="celebrate" onclick="showToast('小灰开心地数金币！')">庆祝</button></div></div></div>`;
+}
+
+function renderPostcard(card,data){
+  const greeting=data.greeting||ADVENTURE_GREETINGS[Math.floor(Math.random()*ADVENTURE_GREETINGS.length)].replace('{place}',data.place||'远方');
+  const specialtyHtml=data.specialty?`<div class="pc-specialty"><div class="sp-icon">${data.specialty.icon}</div><div class="sp-info"><div class="sp-name">寄回特产：${data.specialty.name}</div>${data.specialty.desc}</div></div>`:'';
+  const unlockHtml=data.unlock?`<div style="background:#fff8dc;border-radius:12px;padding:10px 12px;color:#8a6b22;font-size:13px;font-weight:700;margin-bottom:12px">🔓 ${data.unlock}</div>`:'';
+  const skillHtml=data.skillBanner?`<div style="margin-bottom:12px">${data.skillBanner}</div>`:'';
+  const now=new Date();
+  card.innerHTML=`<div class="postcard"><div class="postcard-top"><img class="postcard-img" src="result-sample.png" alt=""><div class="postcard-right"><div class="postmark">${now.getMonth()+1}.${now.getDate()}<br>STAMP<br>${data.place||''}</div><div class="stamp">🏔️</div><div class="airmail">AIR MAIL · POSTCARD</div></div></div><div class="postcard-body"><div class="pc-greeting">"${greeting}"<br>—— 小灰 寄自${data.place||'远方'}</div>${specialtyHtml}${skillHtml}${unlockHtml}<div class="postcard-rewards">${(data.rewards||[]).map(r=>`<span class="pr">${r}</span>`).join('')}</div></div><div class="postcard-footer"><div class="result-actions"><button class="accept" onclick="closeResultModal()">收下明信片</button><button class="celebrate" onclick="showToast('小灰开心地转圈圈！')">庆祝</button></div></div></div>`;
+}
+
+// === 学习系统（学期制+学识等级） ===
 function goStudy(){
-  // 浮层选择科目
-  const nextCredits=state.education<5?EDU_CREDITS[state.education]:'已满';
-  const progressPct=state.education<5?Math.min(100,state.credits/EDU_CREDITS[state.education]*100):100;
-  const eduInfo=state.education<5?`学分: ${state.credits}/${nextCredits} → 升${EDU_NAMES[state.education+1]}`:`学分: ${state.credits} (满级)`;
+  const lvl=getKnowledgeLvl(state.credits);const bonus=getWorkBonus(state.credits);
+  const nextCredits=getNextLvlCredits(state.credits);
+  const progressPct=Math.min(100,(state.credits%5)/5*100);
+  const eduInfo=`学分: ${state.credits}/${nextCredits} → 升Lv.${lvl+1}`;
   let html=`<div class="sheet-title">📚 选择学习科目</div>
+    <div style="display:flex;justify-content:flex-end;margin:-8px 0 6px;gap:8px"><button onclick="closeActionSheet();goSkills()" style="font-size:12px;color:#2e7d32;font-weight:700;padding:4px 12px;border-radius:12px;background:#e8f5e9">🎓 技能书</button><button onclick="goGuideAnchor('guide-study','screen-map')" style="font-size:12px;color:#129cf3;font-weight:700;padding:4px 12px;border-radius:12px;background:#e9f5ff">📖 规则</button></div>
     <div style="margin:8px 0 14px;padding:12px 14px;background:rgba(255,248,220,.9);border-radius:16px;border:1px solid rgba(255,230,150,.5)">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-        <span style="font-size:22px">🎓</span>
-        <div><div style="font-size:15px;font-weight:800">学历: ${EDU_NAMES[state.education]}</div><div style="font-size:12px;color:#8a6b22;margin-top:2px">${eduInfo}</div></div>
-      </div>
-      <div style="height:6px;border-radius:6px;background:#ececec;overflow:hidden"><div style="height:100%;width:${progressPct}%;background:linear-gradient(90deg,#ffd037,#ff911c);border-radius:6px;transition:width .4s"></div></div>
-    </div>
-    <div class="list">`;
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span style="font-size:22px">📚</span><div><div style="font-size:15px;font-weight:800">学识 Lv.${lvl} <span style="font-size:12px;font-weight:400;color:#888">· 第${state.semester}学期</span></div><div style="font-size:12px;color:#8a6b22;margin-top:2px">${eduInfo} · 打工加成+${bonus}%</div></div></div>
+      <div style="height:6px;border-radius:6px;background:#ececec;overflow:hidden"><div style="height:100%;width:${progressPct}%;background:linear-gradient(90deg,#ffd037,#ff911c);border-radius:6px"></div></div>
+    </div><div class="list">`;
   Object.entries(SUBJECTS).forEach(([key,sub])=>{
-    const s=state.subjects[key];
-    const cl=COURSE_LEVELS[Math.min(s.level,3)];
-    const done=s.level>=4;
-    const statusText=done?'已毕业 ✓':TIER_NAMES[s.level]+' · '+s.progress+'/'+cl.times;
-    const tierColor=TIER_COLORS[Math.min(s.level,3)];
-    html+=`<button class="list-card" ${done?'':'onclick="selectSubject(\''+key+'\')"'} style="${done?'opacity:.5':''}">
-      <div class="icon">${sub.icon}</div>
-      <div class="main"><div class="name">${sub.name}</div><div class="meta"><span class="tier-badge ${tierColor}">${statusText}</span>${sub.desc}</div></div>
-    </button>`;
+    const s=state.subjects[key];const cl=COURSE_LEVELS[Math.min(s.level,3)];const done=s.level>=4;
+    const statusText=done?'本学期已修完 ✓':TIER_NAMES[Math.min(s.level,3)]+' · '+s.progress+'/'+cl.times;
+    html+=`<button class="list-card" ${done?'':'onclick="selectSubject(\''+key+'\')"'} style="${done?'opacity:.5':''}"><div class="icon">${sub.icon}</div><div class="main"><div class="name">${sub.name}</div><div class="meta"><span class="tier-badge ${TIER_COLORS[Math.min(s.level,3)]}">${statusText}</span>${sub.desc}</div></div></button>`;
   });
-  html+=`</div>`;
-  showActionSheet(html);
+  // 如果4科全部修完，显示升学期按钮
+  const allDone=Object.values(state.subjects).every(s=>s.level>=4);
+  if(allDone)html+=`<div style="margin-top:16px;text-align:center"><button onclick="newSemester()" style="padding:10px 28px;border-radius:20px;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;font-size:14px;font-weight:700;border:none;box-shadow:0 4px 12px rgba(118,75,162,.3)">🎉 开启第${state.semester+1}学期</button><div style="font-size:11px;color:#888;margin-top:6px">所有科目重置为基础阶段，带入新课表内容</div></div>`;
+  html+=`</div>`;showActionSheet(html);
+}
+
+function newSemester(){
+  state.semester++;
+  Object.keys(state.subjects).forEach(k=>{state.subjects[k]={level:0,progress:0}});
+  closeActionSheet();showToast('🎉 第'+state.semester+'学期开始！新课表已解锁');
+  setTimeout(()=>goStudy(),300);
 }
 
 function selectSubject(key){
-  state.currentSubject=key;
-  const s=state.subjects[key];
-  closeActionSheet();
-  if(s.level>=1&&!s.route){
-    // 需选路线 - 浮层展示
-    setTimeout(()=>showRouteSheet(key),200);
-  } else {
-    setTimeout(()=>showStudyConfirmSheet(key),200);
-  }
+  state.currentSubject=key;closeActionSheet();
+  setTimeout(()=>showStudyConfirmSheet(key),200);
 }
 
 function showStudyConfirmSheet(key){
-  const s=state.subjects[key];
-  const cl=COURSE_LEVELS[Math.min(s.level,3)];
-  const tierColor=TIER_COLORS[Math.min(s.level,3)];
-  const routeInfo=s.route?ROUTES[key].find(r=>r.id===s.route):null;
-  let routeNote='';
-  if(s.level>=4&&s.route){routeNote=`<div style="margin-top:12px;padding:10px;background:#e8f5e9;border-radius:12px;font-size:13px;color:#2e7d32">✅ 当前路线已学完！你可以去学习其他科目或路线了。</div>`}
-  showActionSheet(`
-    <div class="sheet-title">📚 ${SUBJECTS[key].name} · <span class="tier-badge ${tierColor}">${COURSE_LEVELS[Math.min(s.level,3)].name}</span></div>
+  const s=state.subjects[key];const cl=COURSE_LEVELS[Math.min(s.level,3)];
+  showActionSheet(`<div class="sheet-title">📚 ${SUBJECTS[key].name} · <span class="tier-badge ${TIER_COLORS[Math.min(s.level,3)]}">${cl.name}</span></div>
     <div class="sheet-line"><div class="k">进度</div><div class="v">${s.progress}/${cl.times} 次</div></div>
     <div class="sheet-line"><div class="k">耗时</div><div class="v">${cl.duration}</div></div>
     <div class="sheet-line"><div class="k">奖励</div><div class="v">经验+${cl.exp} · 学分+${cl.credit}</div></div>
     ${cl.cost?`<div class="sheet-line"><div class="k">费用</div><div class="v">${cl.cost}金币</div></div>`:''}
-    ${routeInfo?`<div class="sheet-line"><div class="k">路线</div><div class="v">${routeInfo.name}</div></div>`:''}
-    ${routeNote}
-    <button class="btn-blue sheet-btn" onclick="confirmStudy('${key}')">开始学习</button>
-  `);
-}
-
-function showRouteSheet(key){
-  let html=`<div class="sheet-title">🛤️ 选择专业方向</div>
-    <div style="margin:8px 0 12px;padding:10px;background:#fff8dc;border-radius:12px;font-size:13px;color:#8a6b22">选择后沿此路线成长。<strong>完成全部课程后可去学其他路线。</strong></div>
-    <div class="list">`;
-  ROUTES[key].forEach(r=>{
-    html+=`<button class="list-card" onclick="selectRoute('${key}','${r.id}')"><div class="icon">${r.icon}</div><div class="main"><div class="name">${r.name}</div><div class="meta">${r.path}<br>${r.desc}</div></div></button>`;
-  });
-  html+=`</div>`;
-  showActionSheet(html);
-}
-
-function selectRoute(key,routeId){
-  state.subjects[key].route=routeId;
-  const r=ROUTES[key].find(x=>x.id===routeId);
-  closeActionSheet();
-  showToast('选择了 '+r.name);
-  setTimeout(()=>showStudyConfirmSheet(key),300);
+    <div style="margin-top:12px;padding:10px;background:#e8f5e9;border-radius:12px;font-size:12px;color:#2e7d32">🎓 40%概率习得${SUBJECTS[key].name}相关Skill</div>
+    <button class="btn-blue sheet-btn" onclick="confirmStudy('${key}')">开始学习</button>`);
 }
 
 function confirmStudy(key){
   const s=state.subjects[key],cl=COURSE_LEVELS[Math.min(s.level,3)];
   if(cl.cost&&state.coins<cl.cost){showToast('金币不足');return}
-  if(cl.cost)state.coins-=cl.cost;
-  closeActionSheet();
-  startOuting('小灰出门学习'+SUBJECTS[key].name+'啦！', 3000, ()=>completeStudy(key));
+  if(cl.cost)state.coins-=cl.cost;closeActionSheet();
+  startOuting('小灰出门学习'+SUBJECTS[key].name+'啦！',10000,()=>completeStudy(key),'study',SUBJECTS[key].name);
 }
 
 function completeStudy(key){
   const s=state.subjects[key],cl=COURSE_LEVELS[Math.min(s.level,3)];
   const exp=cl.exp,credits=cl.credit;
   s.progress++;state.studyCount++;state.credits+=credits;
-  if(state.education<5&&state.credits>=EDU_CREDITS[state.education])state.education++;
+  const prevLvl=getKnowledgeLvl(state.credits-credits);const newLvl=getKnowledgeLvl(state.credits);
   let unlock=null;
-  if(s.progress>=cl.times){
-    s.progress=0;
-    if(s.level===0&&!s.route){
-      s.level=1;
-      showResultModal('study',{
-        title:SUBJECTS[key].name+'基础课程结业',
-        sub:'恭喜完成全部基础课程！',
-        rewards:['📚 经验 +'+exp,'🎓 学分 +'+credits],
-        unlock:'基础课程完毕！请选择专业方向',
-        comment:'"小灰拿到了第一张成绩单，红围巾都飘起来了！接下来要选方向深入钻研啦～"'
-      });
-      return;
-    } else {
-      const oldLevel=s.level;
-      s.level++;
-      if(s.route){
-        const r=ROUTES[key].find(x=>x.id===s.route);
-        const jobIdx=Math.min(oldLevel-1,3);
-        if(r&&r.jobs[jobIdx]) unlock='解锁新职业: '+r.jobs[jobIdx];
-      }
-    }
-  }
-  const extraRewards=['📚 经验 +'+exp,'🎓 学分 +'+credits];
-  if(state.studyCount===2) extraRewards.push('🔓 解锁打工');
-  showResultModal('study',{
-    title:SUBJECTS[key].name+'学习完成',
-    sub:SUBJECTS[key].name+' · '+cl.name,
-    rewards:extraRewards,
-    unlock:unlock,
-    comment:'"今天学了好多新东西！小灰把红围巾整理得端端正正，说下次还想和同学们一起上课。"'
-  });
+  if(newLvl>prevLvl)unlock='学识升级！Lv.'+prevLvl+' → Lv.'+newLvl;
+  if(s.progress>=cl.times){s.progress=0;s.level++;if(!unlock)unlock=SUBJECTS[key].name+'升级到'+TIER_NAMES[Math.min(s.level,3)]+'阶段'}
+  // 40%概率习得Skill
+  let skillBanner='',skillResult=null;
+  if(Math.random()<0.4){const sr=tryLearnSkill(key);if(sr){skillBanner=renderSkillBanner(sr,false);skillResult=sr}}
+  const rewards=['📚 经验 +'+exp,'🎓 学分 +'+credits];
+  if(state.studyCount===2)rewards.push('🔓 解锁打工');
+  // 结算文案（同时用于结算画面和历史记录）
+  const selfComment=SELF_COMMENTS[Math.floor(Math.random()*SELF_COMMENTS.length)];
+  const teacherComment=TEACHER_COMMENTS[Math.floor(Math.random()*TEACHER_COMMENTS.length)];
+  // 记录历史（复用结算文案）
+  addHistory({type:'study',icon:SUBJECTS[key].icon,title:'学习'+SUBJECTS[key].name+'·'+cl.name,duration:cl.duration,rewards:rewards.slice(),skill:skillResult?{name:skillResult.skill.name,icon:skillResult.skill.icon,level:skillResult.level}:null,specialty:null,selfComment:selfComment,teacherComment:teacherComment,unlock:unlock});
+  showResultModal('study',{title:SUBJECTS[key].name+'学习完成',sub:SUBJECTS[key].name+' · '+cl.name,rewards,unlock,skillBanner,selfComment,teacherComment});
 }
 
-// === 打工系统 ===
+// === 打工系统（组合解锁） ===
+function isJobUnlocked(job){
+  if(!job.require) return true;
+  for(const[subj,reqLevel] of Object.entries(job.require)){
+    if((state.subjects[subj]?.level||0)<=reqLevel) return false;
+  }
+  return true;
+}
+
 function goWork(){
   if(!state.unlocked.work){showToast('完成2次学习后解锁打工');return}
-  const jobs=getAvailableJobs();
-  let html=`<div class="sheet-title">💼 选择职业</div><div class="list" style="margin-top:12px">`;
-  jobs.forEach((j,i)=>{
-    html+=`<button class="list-card" onclick="pickJob(${i})"><div class="icon">${j.icon}</div><div class="main"><div class="name"><span class="tier-badge ${TIER_COLORS[j.tierIdx]}">${TIER_NAMES[j.tierIdx]}</span>${j.name}</div><div class="meta">${j.subject} · ${j.duration}分钟</div></div><div class="price">${j.pay}金</div></button>`;
+  let html=`<div class="sheet-title">💼 选择职业</div><div style="display:flex;justify-content:flex-end;margin:-4px 0 8px;gap:8px"><button onclick="closeActionSheet();goSkills()" style="font-size:12px;color:#2e7d32;font-weight:700;padding:4px 12px;border-radius:12px;background:#e8f5e9">🎓 技能书</button><button onclick="goGuideAnchor('guide-work','screen-map')" style="font-size:12px;color:#129cf3;font-weight:700;padding:4px 12px;border-radius:12px;background:#e9f5ff">📖 规则</button></div><div class="list" style="margin-top:12px">`;
+  JOBS.forEach((j,i)=>{
+    const unlocked=isJobUnlocked(j);
+    html+=`<button class="list-card" ${unlocked?'onclick="pickJob('+i+')"':''} style="${unlocked?'':'opacity:.45'}"><div class="icon" style="background:${unlocked?'#fff3cf':'#eee'}">${j.icon}</div><div class="main"><div class="name"><span class="tier-badge ${TIER_COLORS[j.tier]}">${TIER_NAMES[j.tier]}</span>${j.name}</div><div class="meta">${unlocked?j.duration+'分钟 · 25%概率得Skill':'🔒 需要: '+j.desc}</div></div><div class="price">${j.pay}金</div></button>`;
   });
-  html+=`</div>`;
-  showActionSheet(html);
+  html+=`</div>`;showActionSheet(html);
 }
 
-function getAvailableJobs(){
-  let jobs=[];
-  Object.entries(state.subjects).forEach(([key,s])=>{
-    if(s.route&&s.level>=1){
-      const r=ROUTES[key].find(x=>x.id===s.route);
-      // 所有已解锁的职业都展示（不替换低级）
-      const maxIdx=Math.min(s.level-1,3);
-      for(let i=0;i<=maxIdx;i++){
-        const base=[15,30,60,120][i],bonus=parseInt(EDU_BONUS[state.education]);
-        jobs.push({name:r.jobs[i],tierIdx:i,icon:r.icon,pay:Math.round(base*(1+bonus/100)),duration:[40,45,50,55][i],subject:SUBJECTS[key].name});
-      }
-    }
-  });
-  if(!jobs.length)jobs=[{name:'水泥工',tierIdx:0,icon:'💼',pay:10,duration:40,subject:'通用'}];
-  // 越赚钱排越前
-  jobs.sort((a,b)=>b.pay-a.pay);
-  window._availableJobs=jobs;
-  return jobs;
-}
-
-function pickJob(idx){
-  closeActionSheet();
-  setTimeout(()=>showWorkConfirmSheet(window._availableJobs[idx]),200);
-}
+function pickJob(idx){closeActionSheet();setTimeout(()=>showWorkConfirmSheet(JOBS[idx]),200)}
 
 function showWorkConfirmSheet(job){
   state.currentJob=job;
-  const hiredName=state.hiredFriend?state.hiredFriend.name:'未雇佣';
-  const buffText=state.hiredFriend?`<span style="color:#0bb76a;font-weight:800">+50% (${Math.round(job.pay*0.5)}金)</span>`:'<span style="color:#999">无加成</span>';
-  const totalPay=state.hiredFriend?Math.round(job.pay*1.5):job.pay;
-  showActionSheet(`
-    <div class="sheet-title">💼 打工确认</div>
-    <div class="sheet-line"><div class="k">同伴</div>
-      <div class="companion">
-        <div class="avatar-penguin"><img src="penguin.png"></div>
-        ${state.hiredFriend?`<div style="display:flex;align-items:center;gap:8px"><div class="avatar-penguin" style="width:36px;height:36px;background:${state.hiredFriend.color}"><span style="font-size:18px">${state.hiredFriend.emoji}</span></div><span style="font-size:13px;font-weight:700">${state.hiredFriend.name}</span></div>`:`<button class="plus" onclick="showHireFriends()">+</button>`}
-        <div class="bonus">友宠buff: ${buffText}</div>
-      </div>
-    </div>
-    <div class="sheet-line"><div class="k">职业</div><div class="v"><span class="tier-badge ${TIER_COLORS[job.tierIdx]}">${TIER_NAMES[job.tierIdx]}</span>${job.name}</div></div>
-    <div class="sheet-line"><div class="k">预期</div><div class="v" style="color:#0bb76a">${totalPay}金币${state.hiredFriend?' (含友宠+50%)':''}</div></div>
+  const hasFriend=state.hiredFriend;
+  const buffText=hasFriend?`<span style="color:#0bb76a;font-weight:800">+50% (${Math.round(job.pay*0.5)}金)</span>`:'<span style="color:#999">无加成</span>';
+  const totalPay=hasFriend?Math.round(job.pay*1.5):job.pay;
+  const friendEarn=hasFriend?Math.round(job.pay*0.5):0;
+  showActionSheet(`<div class="sheet-title">💼 打工确认</div>
+    <div class="sheet-line"><div class="k">结伴</div><div class="companion"><div class="avatar-penguin"><img src="penguin.png"></div>${hasFriend?`<div style="display:flex;align-items:center;gap:8px"><div class="avatar-penguin" style="width:36px;height:36px;background:${hasFriend.color}"><span style="font-size:18px">${hasFriend.emoji}</span></div><span style="font-size:13px;font-weight:700">${hasFriend.name}</span><span style="font-size:11px;color:#888">(${hasFriend.owner}的)</span></div>`:`<button class="plus" onclick="showHireFriends()">+</button>`}<div class="bonus">结伴: ${buffText}</div></div></div>
+    ${hasFriend?`<div style="margin:8px 0;padding:8px 12px;background:#fff8dc;border-radius:12px;font-size:12px;color:#8a6b22">📢 带走${hasFriend.name}期间，${hasFriend.owner}的宠物无法出门。${hasFriend.owner}自动获得 ${friendEarn}金</div>`:''}
+    <div class="sheet-line"><div class="k">职业</div><div class="v"><span class="tier-badge ${TIER_COLORS[job.tier]}">${TIER_NAMES[job.tier]}</span>${job.name}</div></div>
+    <div class="sheet-line"><div class="k">预期</div><div class="v" style="color:#0bb76a">${totalPay}金币${hasFriend?' (含结伴+50%)':''}</div></div>
     <div class="sheet-line"><div class="k">耗时</div><div class="v">${job.duration}分钟</div></div>
     <div class="sheet-line"><div class="k">消耗</div><div class="v">体力-10（当前${state.stamina}）</div></div>
-    <button class="btn-blue sheet-btn" onclick="confirmWork()">开始打工</button>
-  `);
+    <button class="btn-blue sheet-btn" onclick="confirmWork()">开始打工</button>`);
 }
 
-// 好友雇佣列表
-const FRIENDS=[
-  {name:'豆豆',emoji:'🐩',color:'#ffe0e0',owner:'小明',status:'空闲',bonus:'+50%'},
-  {name:'球球',emoji:'🐱',color:'#e0f0ff',owner:'阿杰',status:'空闲',bonus:'+50%'},
-  {name:'旺财',emoji:'🐶',color:'#fff0d0',owner:'小红',status:'打工中',bonus:'+50%'},
-  {name:'咪咪',emoji:'🐈',color:'#e8ffe0',owner:'大伟',status:'空闲',bonus:'+50%'},
-  {name:'小白',emoji:'🐰',color:'#f0e8ff',owner:'莉莉',status:'冒险中',bonus:'+50%'}
-];
+function showHireFriends(){closeActionSheet();setTimeout(()=>{let html=`<div class="sheet-title">👥 带好友宠物一起</div><div style="margin:8px 0 14px;padding:10px 12px;background:#f0f8ff;border-radius:14px;font-size:12px;line-height:1.6;color:#555"><strong style="color:#222">📋 结伴规则</strong><br>· 带走好友宠物一起打工，你的收入 <strong style="color:#0bb76a">+50%</strong><br>· 好友自动获得你基础工资的 <strong style="color:#0bb76a">50%</strong>（躺赚）<br>· 被带走期间好友的宠物无法出门（可被主人喊回）<br>· 每只宠物每天只能被带走 <strong>1次</strong></div><div class="list">`;FRIENDS.forEach((f,i)=>{const av=f.status==='空闲'&&!f.hiredToday;const reason=f.hiredToday?'今日已被带走过':f.status!=='空闲'?'⏳ '+f.status:'';html+=`<button class="list-card" ${av?`onclick="hireFriend(${i})"`:''}style="${av?'':'opacity:.5'}"><div class="icon" style="background:${f.color}">${f.emoji}</div><div class="main"><div class="name">${f.name} <span style="font-size:12px;color:#888;font-weight:400">主人:${f.owner}</span></div><div class="meta">${av?'✅ 空闲 · 可带走':'🚫 '+reason}</div></div>${av?'<div class="price" style="font-size:12px;color:#e65100">带走</div>':''}</button>`});html+=`</div>`;showActionSheet(html)},200)}
 
-function showHireFriends(){
-  closeActionSheet();
-  setTimeout(()=>{
-    let html=`<div class="sheet-title">👥 雇佣好友宠物</div>
-      <div style="margin:8px 0 14px;padding:10px 12px;background:#f0f8ff;border-radius:14px;font-size:12px;line-height:1.6;color:#555">
-        <strong style="color:#222">📋 雇佣规则</strong><br>
-        · 雇佣好友的宠物做同伴，你的打工收入 <strong style="color:#0bb76a">+50%</strong><br>
-        · 你的宠物被好友雇佣时，你也能获得对方收入的 <strong style="color:#0bb76a">10%</strong> 作为挂机收益<br>
-        · 每次打工只能雇佣1只友宠，状态为「空闲」才可雇佣<br>
-        · 被雇佣期间你的宠物不能出门（但你自己可以正常操作）
-      </div>
-      <div class="list">`;
-    FRIENDS.forEach((f,i)=>{
-      const available=f.status==='空闲';
-      html+=`<button class="list-card" ${available?`onclick="hireFriend(${i})"`:''}  style="${available?'':'opacity:.5'}">
-        <div class="icon" style="background:${f.color}">${f.emoji}</div>
-        <div class="main">
-          <div class="name">${f.name} <span style="font-size:12px;color:#888;font-weight:400">主人: ${f.owner}</span></div>
-          <div class="meta">${available?'✅ 空闲可雇佣':'⏳ '+f.status} · 收入buff ${f.bonus}</div>
-        </div>
-      </button>`;
-    });
-    html+=`</div>`;
-    showActionSheet(html);
-  },200);
-}
-
-function hireFriend(idx){
-  state.hiredFriend=FRIENDS[idx];
-  closeActionSheet();
-  showToast('已雇佣 '+FRIENDS[idx].name+' 做同伴！');
-  setTimeout(()=>showWorkConfirmSheet(state.currentJob),300);
-}
+function hireFriend(idx){state.hiredFriend=FRIENDS[idx];FRIENDS[idx].hiredToday=true;closeActionSheet();showToast('带走了 '+FRIENDS[idx].name+'！');setTimeout(()=>showWorkConfirmSheet(state.currentJob),300)}
 
 function confirmWork(){
   if(state.stamina<10){showToast('体力不足');return}
-  state.stamina-=10;
-  closeActionSheet();
-  const job=state.currentJob;
-  const multiplier=state.hiredFriend?1.5:1;
-  const friendName=state.hiredFriend?state.hiredFriend.name:null;
-  startOuting('小灰出门打工('+job.name+')啦！', 3000, ()=>{
-    const earned=Math.round(job.pay*multiplier);
-    state.coins+=earned;state.totalEarnings+=earned;
-    const rewards=['🪙 '+earned+'金','📚 经验 +15'];
-    if(friendName) rewards.push('🤝 '+friendName+'协助');
-    showResultModal('work',{
-      title:'打工完成',
-      sub:job.name+' · 收入 '+earned+' 金'+(friendName?' (含友宠加成)':''),
-      rewards:rewards,
-      unlock:null,
-      comment:friendName?
-        '"小灰和'+friendName+'配合默契，效率翻倍！红围巾一甩，金币哗哗入袋。"':
-        '"今天的工作比想象中顺利！小灰把红围巾一甩，认真地把赚到的金币收进小包里。"'
-    });
-    state.hiredFriend=null; // 用完重置
-  });
+  state.stamina-=10;closeActionSheet();
+  const job=state.currentJob;const multiplier=state.hiredFriend?1.5:1;const friendName=state.hiredFriend?state.hiredFriend.name:null;const friendOwner=state.hiredFriend?state.hiredFriend.owner:null;
+  startOuting('小灰带着'+(friendName||'')+'出门打工('+job.name+')啦！',10000,()=>{
+    const earned=Math.round(job.pay*multiplier);state.coins+=earned;state.totalEarnings+=earned;
+    const friendEarned=friendName?Math.round(job.pay*0.5):0;
+    // 25%概率习得Skill
+    let skillBanner='',skillResult=null;
+    if(Math.random()<0.25){const sr=tryLearnSkill('work');if(sr){skillBanner=renderSkillBanner(sr,false);skillResult=sr}}
+    const workRewards=['🪙 +'+earned+'金','📚 经验+15'];
+    if(friendName)workRewards.push('🤝 '+friendName+'结伴(+50%)');
+    const workComment=friendName?'小灰带着'+friendName+'一起打工，效率大增！赚了'+earned+'金币。'+friendOwner+'的'+friendName+'也自动获得了'+friendEarned+'金。':'今天的工作比想象中顺利！小灰认真地收好'+earned+'金币。';
+    addHistory({type:'work',icon:job.icon,title:'打工·'+job.name+(friendName?' (带'+friendName+')':''),duration:job.duration+'分钟',rewards:workRewards,skill:skillResult?{name:skillResult.skill.name,icon:skillResult.skill.icon,level:skillResult.level}:null,specialty:null,comment:workComment,friendName:friendName,friendOwner:friendOwner,friendEarned:friendEarned});
+    showResultModal('work',{title:'打工完成',earned,friendName,friendOwner,friendEarned,skillBanner,comment:'"'+workComment+'"'});
+    state.hiredFriend=null;
+  },'work',job.name);
 }
 
 // === 冒险系统 ===
 function goAdventure(){
-  if(!state.unlocked.adventure){showToast('累计赚100金后解锁冒险');return}
-  let html=`<div class="sheet-title">🏔️ 选择冒险地点</div><div style="margin:10px 0;padding:10px;background:#fff8dc;border-radius:12px;font-size:13px;color:#8a6b22">花费金币冒险，可能触发PK、发现特产或结交新朋友。</div><div class="list">`;
-  ADVENTURE_MAPS.forEach((m,i)=>{
-    const locked=m.locked||state.coins<m.cost;
-    html+=`<button class="list-card" ${locked?'':'onclick="pickAdventure('+i+')"'} style="${locked?'opacity:.4':''}"><div class="icon">${m.icon}</div><div class="main"><div class="name">${m.name}</div><div class="meta">${m.desc} · ${m.difficulty}</div></div><div class="price">${m.cost}金</div></button>`;
-  });
-  html+=`</div>`;
-  showActionSheet(html);
+  if(!state.unlocked.adventure){showToast('累计赚500金后解锁冒险');return}
+  let html=`<div class="sheet-title">🏔️ 选择冒险地点</div><div style="display:flex;justify-content:flex-end;margin:-4px 0 8px;gap:8px"><button onclick="closeActionSheet();goAtlas()" style="font-size:12px;color:#e65100;font-weight:700;padding:4px 12px;border-radius:12px;background:#fff3e0">🗺️ 图鉴</button><button onclick="closeActionSheet();goSkills()" style="font-size:12px;color:#2e7d32;font-weight:700;padding:4px 12px;border-radius:12px;background:#e8f5e9">🎓 技能</button><button onclick="goGuideAnchor('guide-adventure','screen-map')" style="font-size:12px;color:#129cf3;font-weight:700;padding:4px 12px;border-radius:12px;background:#e9f5ff">📖 规则</button></div><div class="list">`;
+  ADVENTURE_MAPS.forEach((m,i)=>{const locked=m.locked||state.coins<m.cost;html+=`<button class="list-card" ${locked?'':'onclick="pickAdventure('+i+')"'} style="${locked?'opacity:.4':''}"><div class="icon">${m.icon}</div><div class="main"><div class="name">${m.name}</div><div class="meta">${m.desc} · ${m.difficulty}</div></div><div class="price">${m.cost}金</div></button>`});
+  html+=`</div>`;showActionSheet(html);
 }
 
-function pickAdventure(idx){
-  const m=ADVENTURE_MAPS[idx];
-  closeActionSheet();
-  setTimeout(()=>{
-    showActionSheet(`
-      <div class="sheet-title">🏔️ 冒险确认</div>
-      <div class="sheet-line"><div class="k">地点</div><div class="v">${m.name}</div></div>
-      <div class="sheet-line"><div class="k">难度</div><div class="v">${m.difficulty}</div></div>
-      <div class="sheet-line"><div class="k">费用</div><div class="v">${m.cost}金币</div></div>
-      <div class="sheet-line"><div class="k">说明</div><div class="v">${m.desc}</div></div>
-      <button class="btn-blue sheet-btn" onclick="confirmAdventure(${idx})">出发冒险</button>
-    `);
-  },200);
-}
+function pickAdventure(idx){const m=ADVENTURE_MAPS[idx];closeActionSheet();setTimeout(()=>{showActionSheet(`<div class="sheet-title">🏔️ 冒险确认</div><div class="sheet-line"><div class="k">地点</div><div class="v">${m.name}</div></div><div class="sheet-line"><div class="k">难度</div><div class="v">${m.difficulty}</div></div><div class="sheet-line"><div class="k">费用</div><div class="v">${m.cost}金币</div></div><div style="margin-top:12px;padding:10px;background:#e8f5e9;border-radius:12px;font-size:12px;color:#2e7d32">🎓 20%概率偷师习得Skill · 60%概率获得特产</div><button class="btn-blue sheet-btn" onclick="confirmAdventure(${idx})">出发冒险</button>`)},200)}
 
 function confirmAdventure(idx){
-  const m=ADVENTURE_MAPS[idx];
-  state.coins-=m.cost;
-  closeActionSheet();
-  startOuting('小灰出门去'+m.name+'冒险啦！', 3000, ()=>{
+  const m=ADVENTURE_MAPS[idx];state.coins-=m.cost;closeActionSheet();
+  startOuting('小灰出门去'+m.name+'冒险啦！',10000,()=>{
     const roll=Math.random();
+    const specialtyResult=(Math.random()<0.6)?collectSpecialty(idx):null;
+    // 20%概率偷师
+    let skillBanner='',skillResult=null;
+    if(Math.random()<0.2){const sr=tryLearnSkill('adventure');if(sr){skillBanner=renderSkillBanner(sr,true);skillResult=sr}}
     if(roll<0.15){
-      showScreen('screen-adventure-result');
+      // PK
+      addHistory({type:'adventure',icon:m.icon,title:'冒险·'+m.name+' (PK)',duration:'30分钟',rewards:['🥊 PK挑战'],skill:null,specialty:null,greeting:'小灰在'+m.name+'遇到了另一只宠物的挑战！'});
+      renderPKResult();showScreen('screen-adventure-result');
     } else {
-      showResultModal('adventure',{
-        title:'冒险归来',
-        sub:m.name+' · 发现了有趣的东西',
-        rewards:['🪙 '+(m.cost*2)+'金','🎁 获得特产','心情值 ⬆'].slice(0,Math.floor(Math.random()*2)+2),
-        unlock:null,
-        comment:'"小灰从'+m.name+'带回了一张明信片和满满的回忆，红围巾上还沾着露水呢～"'
-      });
+      const rewards=['🪙 '+(m.cost*2)+'金','心情值 ⬆'];
+      let unlockText=null;let specialtyData=null;
+      if(specialtyResult){specialtyData=specialtyResult.item;rewards.splice(1,0,'🎁 特产');if(specialtyResult.unlockNext){unlockText='🗺️ 恭喜！解锁新地图「'+specialtyResult.nextMap+'」！'}}
+      // 生成明信片问候（复用同一段文案给历史和结算）
+      const greeting=ADVENTURE_GREETINGS[Math.floor(Math.random()*ADVENTURE_GREETINGS.length)].replace('{place}',m.name);
+      const stealText=skillResult?STEAL_TEXTS[Math.floor(Math.random()*STEAL_TEXTS.length)].replace('{place}',m.name).replace('{action}',STEAL_ACTIONS[Math.floor(Math.random()*STEAL_ACTIONS.length)]):null;
+      addHistory({type:'adventure',icon:m.icon,title:'冒险·'+m.name,duration:'30分钟',rewards:rewards.slice(),skill:skillResult?{name:skillResult.skill.name,icon:skillResult.skill.icon,level:skillResult.level}:null,specialty:specialtyData?{name:specialtyData.name,icon:specialtyData.icon}:null,greeting:greeting,stealText:stealText});
+      showResultModal('adventure',{title:'冒险归来',place:m.name,rewards,unlock:unlockText,specialty:specialtyData,skillBanner,greeting:greeting});
     }
-  });
+  },'adventure',m.name);
+}
+
+// === PK 系统（随机维度比拼） ===
+function renderPKResult(){
+  const dimensions=[
+    {name:'学识',icon:'📚',myVal:'Lv.'+getKnowledgeLvl(state.credits),enemyVal:'Lv.'+Math.floor(Math.random()*10),myNum:getKnowledgeLvl(state.credits),enemyNum:Math.floor(Math.random()*10)},
+    {name:'金币',icon:'🪙',myVal:state.coins+'金',enemyVal:Math.floor(Math.random()*200)+'金',myNum:state.coins,enemyNum:Math.floor(Math.random()*200)},
+    {name:'社交',icon:'👥',myVal:state.friends+'位好友',enemyVal:Math.floor(Math.random()*8)+'位好友',myNum:state.friends,enemyNum:Math.floor(Math.random()*8)}
+  ];
+  const dim=dimensions[Math.floor(Math.random()*dimensions.length)];
+  const win=dim.myNum>=dim.enemyNum;
+  const reward=win?Math.floor(Math.random()*30)+30:10;
+  state.coins+=reward;
+  const el=document.getElementById('pk-result-content');
+  el.innerHTML=`
+    <div class="pk-head"><div class="pk-title">🥊 PK</div><div class="pk-status">${win?'😆 胜利':'😅 惜败'}</div></div>
+    <div style="text-align:center;padding:16px;background:#f8f8f0;border-radius:16px;margin-bottom:16px">
+      <div style="font-size:13px;color:#888;margin-bottom:8px">🎲 随机维度</div>
+      <div style="font-size:28px;margin-bottom:4px">${dim.icon}</div>
+      <div style="font-size:18px;font-weight:900;color:#333">${dim.name}比拼</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:16px;background:#fff;border-radius:16px;border:1px solid #f0f0f0;margin-bottom:16px">
+      <div style="text-align:center;flex:1"><div style="font-size:12px;color:#888">小灰</div><div style="font-size:20px;font-weight:900;color:${win?'#0bb76a':'#ff3b30'}">${dim.myVal}</div></div>
+      <div style="font-size:24px;font-weight:900;color:#666">VS</div>
+      <div style="text-align:center;flex:1"><div style="font-size:12px;color:#888">豆豆</div><div style="font-size:20px;font-weight:900;color:${win?'#ff3b30':'#0bb76a'}">${dim.enemyVal}</div></div>
+    </div>
+    <div class="reward-pills">
+      <div class="pill">${win?'<span class="multi">1.5倍</span>':''}🪙 ${reward}</div>
+      ${win?'<div class="pill">心情值 <span class="up">⬆</span></div>':'<div class="pill">心情值 <span class="down">⬇</span></div>'}
+    </div>
+    <div style="padding:12px;background:#f0f8ff;border-radius:12px;font-size:13px;color:#555;line-height:1.7">
+      ${win?'小灰在「'+dim.name+'」维度完胜对手！红围巾得意地飘起来了～':'虽然这次输了，但小灰说下次一定能赢回来！加油努力提升'+dim.name+'吧～'}
+    </div>
+    <div style="margin-top:16px"><button class="btn-blue" onclick="goHome()">回家</button></div>`;
 }
 
 updateMapLocks();
+
 </script>
 </body>
 </html>
