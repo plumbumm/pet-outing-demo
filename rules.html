@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>出门玩法说明</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif; background:#f8f6f0; color:#333; line-height:1.7; padding:0 0 60px; }
+.header { background:linear-gradient(135deg,#667eea,#764ba2); color:#fff; padding:60px 24px 32px; text-align:center; }
+.header h1 { font-size:22px; font-weight:800; margin-bottom:6px; }
+.header p { font-size:13px; opacity:.8; }
+.section { padding:24px 20px; }
+.section-title { font-size:17px; font-weight:800; margin-bottom:14px; }
+.card { background:#fff; border-radius:16px; padding:16px; margin-bottom:12px; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+.card-title { font-size:14px; font-weight:700; margin-bottom:8px; }
+.card p, .card li { font-size:13px; color:#555; line-height:1.8; }
+.card ul { padding-left:18px; }
+.tag { display:inline-block; padding:2px 8px; border-radius:6px; font-size:11px; font-weight:600; margin:2px 4px 2px 0; }
+.tag-green { background:#e8f5e9; color:#2e7d32; }
+.tag-blue { background:#e3f2fd; color:#1565c0; }
+.tag-purple { background:#f3e5f5; color:#7b1fa2; }
+.formula { background:#f9f9f6; border-radius:10px; padding:10px 14px; font-size:12px; color:#555; margin:8px 0; }
+.table-wrap { overflow-x:auto; margin:8px 0; }
+table { width:100%; border-collapse:collapse; font-size:12px; }
+th { background:#f5f5f0; padding:8px 10px; text-align:left; font-weight:600; white-space:nowrap; }
+td { padding:8px 10px; border-bottom:1px solid #f0f0f0; }
+.tip { background:#fff8dc; border-radius:10px; padding:10px 14px; font-size:12px; color:#8a6b22; margin:10px 0; }
+.nav { position:fixed; bottom:0; left:0; right:0; background:#fff; border-top:1px solid #eee; display:flex; padding:8px 16px; gap:6px; z-index:99; }
+.nav a { flex:1; text-align:center; font-size:11px; padding:6px 4px; border-radius:8px; background:#f5f5f0; color:#555; text-decoration:none; font-weight:600; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>出门玩法说明</h1>
+  <p>学习 · 打工 · 冒险 · PK</p>
+</div>
+
+<!-- 学习 -->
+<div class="section" id="study">
+  <div class="section-title">学习</div>
+  
+  <div class="card">
+    <div class="card-title">玩法介绍</div>
+    <p>带宠物出门上课！有文化、科学、艺术、体育四门科目可以选。</p>
+    <p>每次上课消耗 <b>10点体力</b>，获得1个学分，Lv.0课程免费，后续课程需要缴纳学费（金币）。学完之后宠物会变得更强——战力属性会提升，还有机会学到新的技能。</p>
+    <p>每门科目有独立的等级，等级没有上限，可以一直提升变强。</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">怎么升级</div>
+    <p>每升一级需要上一定次数的课。等级越高，需要的次数越多：</p>
+    <div class="formula">升级所需次数 = 当前等级 + 2<br><br>举例：Lv.0升到Lv.1 需要上2次课<br>Lv.5升到Lv.6 需要上7次课</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">学费</div>
+    <p>刚开始学是免费的，后面随等级提高学费会涨，最多只要300金一次：</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>等级</th><th>每次学费</th></tr>
+        <tr><td>Lv.0</td><td>免费</td></tr>
+        <tr><td>Lv.1-2</td><td>50金</td></tr>
+        <tr><td>Lv.3-4</td><td>100金</td></tr>
+        <tr><td>Lv.5-6</td><td>150金</td></tr>
+        <tr><td>Lv.7-8</td><td>200金</td></tr>
+        <tr><td>Lv.9-10</td><td>250金</td></tr>
+        <tr><td>Lv.11及以上</td><td>300金（封顶）</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">不同的科目有什么用？</div>
+    <p>每门科目会提升不同的战力属性，选什么科目决定了你的宠物擅长什么：</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>科目</th><th>主要提升</th><th>次要提升</th></tr>
+        <tr><td>文化</td><td>脑力</td><td>灵巧</td></tr>
+        <tr><td>科学</td><td>体魄</td><td>脑力</td></tr>
+        <tr><td>艺术</td><td>灵巧</td><td>脑力</td></tr>
+        <tr><td>体育</td><td>体魄</td><td>灵巧</td></tr>
+      </table>
+    </div>
+    <div class="tip">小贴士：属性会影响PK胜负哦！<br>· 想让宠物变成脑力型 → 多学文化和艺术<br>· 想让宠物变成灵巧型 → 多学艺术和体育<br>· 想让宠物变成体魄型 → 多学科学和体育</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">学习能获得技能吗</div>
+    <p>能！每次学完都有机会习得一个和当前科目相关的技能。学得越多，获得技能的机会越多。</p>
+  </div>
+</div>
+
+<!-- 打工 -->
+<div class="section" id="work">
+  <div class="section-title">打工</div>
+
+  <div class="card">
+    <div class="card-title">玩法介绍</div>
+    <p>带宠物出门打工赚钱！有6个工种可以选，每次打工消耗 <b>10点体力</b>，不花金币。</p>
+    <p>每个工种有独立的等级，等级越高收入越多，职业头衔也会跟着变。打工也有机会获得技能。</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">6个工种和对应的职业头衔</div>
+    <p>每个工种随着等级增长，头衔变高：</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>工种</th><th>Lv.0-2</th><th>Lv.3-5</th><th>Lv.6-9</th><th>Lv.10-14</th><th>Lv.15-19</th><th>Lv.20+</th></tr>
+        <tr><td>美食</td><td>服务员</td><td>甜品师</td><td>大厨</td><td>主厨</td><td>米其林主厨</td><td>美食大师</td></tr>
+        <tr><td>物流</td><td>快递员</td><td>骑手队长</td><td>物流经理</td><td>区域总监</td><td>供应链总监</td><td>物流大亨</td></tr>
+        <tr><td>创意</td><td>美工助理</td><td>插画师</td><td>设计师</td><td>创意总监</td><td>艺术指导</td><td>创意大师</td></tr>
+        <tr><td>表演</td><td>龙套</td><td>配角</td><td>主演</td><td>金牌主演</td><td>当红明星</td><td>传奇巨星</td></tr>
+        <tr><td>科技</td><td>实习生</td><td>程序员</td><td>架构师</td><td>技术总监</td><td>CTO</td><td>科技巨擘</td></tr>
+        <tr><td>体育</td><td>陪练</td><td>健身教练</td><td>运动员</td><td>教练组长</td><td>体育明星</td><td>传奇运动家</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">能赚多少钱？</div>
+    <p>升级规则和学习相同（升级所需次数 = 当前等级 + 2）。收入随等级增长，最高1500金一次：</p>
+    <div class="formula">每次收入 = 100 + 等级 x 50<br><br>举例：Lv.0赚100金 / Lv.5赚350金 / Lv.10赚600金 / Lv.20赚1100金<br>最高不超过1500金/次</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">雇佣好友宠物打工</div>
+    <p>你可以雇佣一只好友的宠物来帮忙，两个人一起干活效率更高：</p>
+    <ul>
+      <li>雇佣后，这次打工的<b>总工资翻倍</b></li>
+      <li>但要把其中 <b>1/4</b> 分给好友作为酬金</li>
+      <li>也就是说：你实际到手是平时的1.5倍，好友躺赚你工资的一半</li>
+    </ul>
+    <p style="margin-top:8px">注意事项：</p>
+    <ul>
+      <li>好友的宠物被雇走期间不能自己出门（好友可以随时喊回来）</li>
+      <li>每只宠物每天只能被雇佣1次</li>
+    </ul>
+  </div>
+</div>
+
+<!-- 冒险 -->
+<div class="section" id="adventure">
+  <div class="section-title">冒险</div>
+
+  <div class="card">
+    <div class="card-title">玩法介绍</div>
+    <p>带宠物出门探索，每次出门需要购买门票（200一张）。冒险途中会随机遇到各种事件——可能赚到钱，可能遇见别的宠物，还可能发生一些意想不到的事哦～</p>
+  </div>
+</div>
+
+<!-- PK -->
+<div class="section" id="pk">
+  <div class="section-title">PK</div>
+
+  <div class="card">
+    <div class="card-title">怎么打</div>
+    <p>PK靠三个属性决胜负：<b>体魄、灵巧、脑力</b>。三者之间存在克制关系：</p>
+    <ul>
+      <li><b>体魄 克制 灵巧</b>——花里胡哨没有用</li>
+      <li><b>灵巧 克制 脑力</b>——天下武功，唯快不破</li>
+      <li><b>脑力 克制 体魄</b>——你有蛮力，我有策略</li>
+    </ul>
+    <p style="margin-top:8px">你的宠物属于什么类型，取决于三项属性里哪个最高。</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">战力怎么算</div>
+    <p>战力 = 三项属性之和 x 克制加成 x 随机波动</p>
+    <ul>
+      <li>克制对方：战力 x1.2</li>
+      <li>被对方克制：对方战力 x1.2</li>
+      <li>类型相同：正面比拼，无克制加成</li>
+    </ul>
+    <p>每场PK还有一点随机波动，不是每次都稳赢。</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">玄学事件</div>
+    <p>偶尔会触发意想不到的事，可能会颠覆PK的胜负局势，概率很小，遇到算你幸运（或者倒霉）。</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">赢了获得什么？</div>
+    <p>赢了拿 50~80 金，宠物心情也会变好。输了只有 10 金的安慰奖，心情会稍微下降。</p>
+  </div>
+</div>
+
+<!-- 底部导航 -->
+<div class="nav">
+  <a href="#study">学习</a>
+  <a href="#work">打工</a>
+  <a href="#adventure">冒险</a>
+  <a href="#pk">PK</a>
+</div>
+
+</body>
+</html>
